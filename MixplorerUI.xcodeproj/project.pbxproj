@@ -11,11 +11,6 @@
 		25B7AEB029E322CB00FB1186 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEAF29E322CB00FB1186 /* ContentView.swift */; };
 		25B7AEB529E322CC00FB1186 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AEB429E322CC00FB1186 /* Preview Assets.xcassets */; };
 		25B7AEBF29E3233500FB1186 /* HalfASheet in Frameworks */ = {isa = PBXBuildFile; productRef = 25B7AEBE29E3233500FB1186 /* HalfASheet */; };
-		25B7AEC529E3236700FB1186 /* PropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEC029E3236700FB1186 /* PropertiesView.swift */; };
-		25B7AEC629E3236700FB1186 /* TTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEC129E3236700FB1186 /* TTView.swift */; };
-		25B7AEC729E3236700FB1186 /* PlantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEC229E3236700FB1186 /* PlantsView.swift */; };
-		25B7AEC829E3236700FB1186 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEC329E3236700FB1186 /* SideMenuView.swift */; };
-		25B7AEC929E3236700FB1186 /* GUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEC429E3236700FB1186 /* GUIView.swift */; };
 		25B7AECB29E323AD00FB1186 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AECA29E323AD00FB1186 /* Assets */; };
 		25B7AECD29E323CB00FB1186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AECC29E323CB00FB1186 /* Assets.xcassets */; };
 		25B7AEF329E3267500FB1186 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEE829E3267500FB1186 /* Utilities.swift */; };
@@ -42,6 +37,12 @@
 		25B7AF1329E3282C00FB1186 /* Vase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0C29E3282C00FB1186 /* Vase.swift */; };
 		25B7AF1529E328FE00FB1186 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AF1429E328FE00FB1186 /* Main.storyboard */; };
 		25B7AF1729E32B6A00FB1186 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AF1629E32B6A00FB1186 /* Models.scnassets */; };
+		25B7AF1E29E3544300FB1186 /* GUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1829E3544300FB1186 /* GUIView.swift */; };
+		25B7AF1F29E3544300FB1186 /* MixplorerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1929E3544300FB1186 /* MixplorerApp.swift */; };
+		25B7AF2029E3544300FB1186 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1A29E3544300FB1186 /* SideMenuView.swift */; };
+		25B7AF2129E3544300FB1186 /* PlantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1B29E3544300FB1186 /* PlantsView.swift */; };
+		25B7AF2229E3544300FB1186 /* TTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1C29E3544300FB1186 /* TTView.swift */; };
+		25B7AF2329E3544300FB1186 /* PropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1D29E3544300FB1186 /* PropertiesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,11 +50,6 @@
 		25B7AEAD29E322CB00FB1186 /* MixplorerUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixplorerUIApp.swift; sourceTree = "<group>"; };
 		25B7AEAF29E322CB00FB1186 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		25B7AEB429E322CC00FB1186 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		25B7AEC029E3236700FB1186 /* PropertiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PropertiesView.swift; path = ../../Mixplorer/Mixplorer/PropertiesView.swift; sourceTree = "<group>"; };
-		25B7AEC129E3236700FB1186 /* TTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTView.swift; path = ../../Mixplorer/Mixplorer/TTView.swift; sourceTree = "<group>"; };
-		25B7AEC229E3236700FB1186 /* PlantsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlantsView.swift; path = ../../Mixplorer/Mixplorer/PlantsView.swift; sourceTree = "<group>"; };
-		25B7AEC329E3236700FB1186 /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideMenuView.swift; path = ../../Mixplorer/Mixplorer/SideMenuView.swift; sourceTree = "<group>"; };
-		25B7AEC429E3236700FB1186 /* GUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GUIView.swift; path = ../../Mixplorer/Mixplorer/GUIView.swift; sourceTree = "<group>"; };
 		25B7AECA29E323AD00FB1186 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../../Mixplorer/Mixplorer/Assets; sourceTree = "<group>"; };
 		25B7AECC29E323CB00FB1186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Mixplorer/Mixplorer/Assets.xcassets; sourceTree = "<group>"; };
 		25B7AEE829E3267500FB1186 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ARKitProject/Utilities.swift; sourceTree = "<group>"; };
@@ -80,6 +76,12 @@
 		25B7AF0D29E3282C00FB1186 /* VirtualObjectsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectsManager.swift; sourceTree = "<group>"; };
 		25B7AF1429E328FE00FB1186 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		25B7AF1629E32B6A00FB1186 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; name = Models.scnassets; path = MixplorerUI/Models.scnassets; sourceTree = "<group>"; };
+		25B7AF1829E3544300FB1186 /* GUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GUIView.swift; path = MixplorerUI/GUIView.swift; sourceTree = "<group>"; };
+		25B7AF1929E3544300FB1186 /* MixplorerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MixplorerApp.swift; path = MixplorerUI/MixplorerApp.swift; sourceTree = "<group>"; };
+		25B7AF1A29E3544300FB1186 /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideMenuView.swift; path = MixplorerUI/SideMenuView.swift; sourceTree = "<group>"; };
+		25B7AF1B29E3544300FB1186 /* PlantsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlantsView.swift; path = MixplorerUI/PlantsView.swift; sourceTree = "<group>"; };
+		25B7AF1C29E3544300FB1186 /* TTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TTView.swift; path = MixplorerUI/TTView.swift; sourceTree = "<group>"; };
+		25B7AF1D29E3544300FB1186 /* PropertiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PropertiesView.swift; path = MixplorerUI/PropertiesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,12 @@
 		25B7AEA129E322CB00FB1186 = {
 			isa = PBXGroup;
 			children = (
+				25B7AF1829E3544300FB1186 /* GUIView.swift */,
+				25B7AF1929E3544300FB1186 /* MixplorerApp.swift */,
+				25B7AF1B29E3544300FB1186 /* PlantsView.swift */,
+				25B7AF1D29E3544300FB1186 /* PropertiesView.swift */,
+				25B7AF1A29E3544300FB1186 /* SideMenuView.swift */,
+				25B7AF1C29E3544300FB1186 /* TTView.swift */,
 				25B7AF1629E32B6A00FB1186 /* Models.scnassets */,
 				25B7AEAC29E322CB00FB1186 /* MixplorerUI */,
 				25B7AEAB29E322CB00FB1186 /* Products */,
@@ -139,12 +147,7 @@
 				25B7AEF229E3267500FB1186 /* Virtual Objects */,
 				25B7AEE929E3267500FB1186 /* VirtualObject.swift */,
 				25B7AEED29E3267500FB1186 /* VirtualObjectSelectionViewController.swift */,
-				25B7AEC429E3236700FB1186 /* GUIView.swift */,
-				25B7AEC229E3236700FB1186 /* PlantsView.swift */,
-				25B7AEC029E3236700FB1186 /* PropertiesView.swift */,
 				25B7AECA29E323AD00FB1186 /* Assets */,
-				25B7AEC329E3236700FB1186 /* SideMenuView.swift */,
-				25B7AEC129E3236700FB1186 /* TTView.swift */,
 				25B7AECC29E323CB00FB1186 /* Assets.xcassets */,
 				25B7AEB329E322CC00FB1186 /* Preview Content */,
 			);
@@ -246,26 +249,27 @@
 				25B7AEF829E3267500FB1186 /* VirtualObjectSelectionViewController.swift in Sources */,
 				25B7AEF929E3267500FB1186 /* MainViewController.swift in Sources */,
 				25B7AF1029E3282C00FB1186 /* Cup.swift in Sources */,
-				25B7AEC929E3236700FB1186 /* GUIView.swift in Sources */,
 				25B7AF0F29E3282C00FB1186 /* Chair.swift in Sources */,
+				25B7AF2029E3544300FB1186 /* SideMenuView.swift in Sources */,
 				25B7AEFA29E3267500FB1186 /* ScieneView+Extension.swift in Sources */,
+				25B7AF1F29E3544300FB1186 /* MixplorerApp.swift in Sources */,
 				25B7AEFF29E3280500FB1186 /* Plane.swift in Sources */,
+				25B7AF1E29E3544300FB1186 /* GUIView.swift in Sources */,
+				25B7AF2129E3544300FB1186 /* PlantsView.swift in Sources */,
 				25B7AEF729E3267500FB1186 /* TextManager.swift in Sources */,
 				25B7AF0529E3281500FB1186 /* HitTestVisualization.swift in Sources */,
-				25B7AEC829E3236700FB1186 /* SideMenuView.swift in Sources */,
+				25B7AF2329E3544300FB1186 /* PropertiesView.swift in Sources */,
 				25B7AEFC29E3267500FB1186 /* ARCameraTrackingState.swift in Sources */,
 				25B7AF0629E3281500FB1186 /* FocusSquare.swift in Sources */,
-				25B7AEC529E3236700FB1186 /* PropertiesView.swift in Sources */,
 				25B7AEF529E3267500FB1186 /* MainViewWrapper.swift in Sources */,
 				25B7AEFB29E3267500FB1186 /* SettingsViewController.swift in Sources */,
-				25B7AEC729E3236700FB1186 /* PlantsView.swift in Sources */,
 				25B7AEB029E322CB00FB1186 /* ContentView.swift in Sources */,
 				25B7AF0429E3281500FB1186 /* PlaneDebugVisualization.swift in Sources */,
 				25B7AEF429E3267500FB1186 /* VirtualObject.swift in Sources */,
-				25B7AEC629E3236700FB1186 /* TTView.swift in Sources */,
 				25B7AEF329E3267500FB1186 /* Utilities.swift in Sources */,
 				25B7AF1329E3282C00FB1186 /* Vase.swift in Sources */,
 				25B7AF1229E3282C00FB1186 /* VirtualObjectsManager.swift in Sources */,
+				25B7AF2229E3544300FB1186 /* TTView.swift in Sources */,
 				25B7AEAE29E322CB00FB1186 /* MixplorerUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
