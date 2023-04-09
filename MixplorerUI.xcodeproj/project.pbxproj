@@ -11,7 +11,6 @@
 		25B7AEB029E322CB00FB1186 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEAF29E322CB00FB1186 /* ContentView.swift */; };
 		25B7AEB529E322CC00FB1186 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AEB429E322CC00FB1186 /* Preview Assets.xcassets */; };
 		25B7AEBF29E3233500FB1186 /* HalfASheet in Frameworks */ = {isa = PBXBuildFile; productRef = 25B7AEBE29E3233500FB1186 /* HalfASheet */; };
-		25B7AECD29E323CB00FB1186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AECC29E323CB00FB1186 /* Assets.xcassets */; };
 		25B7AEF329E3267500FB1186 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEE829E3267500FB1186 /* Utilities.swift */; };
 		25B7AEF429E3267500FB1186 /* VirtualObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEE929E3267500FB1186 /* VirtualObject.swift */; };
 		25B7AEF529E3267500FB1186 /* MainViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEEA29E3267500FB1186 /* MainViewWrapper.swift */; };
@@ -40,6 +39,7 @@
 		25B7AF2229E3544300FB1186 /* TTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1C29E3544300FB1186 /* TTView.swift */; };
 		25B7AF2329E3544300FB1186 /* PropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF1D29E3544300FB1186 /* PropertiesView.swift */; };
 		25B7AF2529E356CB00FB1186 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AF2429E356CB00FB1186 /* Assets */; };
+		25B7AF2729E35CF000FB1186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AF2629E35CF000FB1186 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +47,6 @@
 		25B7AEAD29E322CB00FB1186 /* MixplorerUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixplorerUIApp.swift; sourceTree = "<group>"; };
 		25B7AEAF29E322CB00FB1186 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		25B7AEB429E322CC00FB1186 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		25B7AECC29E323CB00FB1186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Mixplorer/Mixplorer/Assets.xcassets; sourceTree = "<group>"; };
 		25B7AEE829E3267500FB1186 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ARKitProject/Utilities.swift; sourceTree = "<group>"; };
 		25B7AEE929E3267500FB1186 /* VirtualObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VirtualObject.swift; path = ARKitProject/VirtualObject.swift; sourceTree = "<group>"; };
 		25B7AEEA29E3267500FB1186 /* MainViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewWrapper.swift; path = ARKitProject/MainViewWrapper.swift; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		25B7AF1C29E3544300FB1186 /* TTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTView.swift; sourceTree = "<group>"; };
 		25B7AF1D29E3544300FB1186 /* PropertiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertiesView.swift; sourceTree = "<group>"; };
 		25B7AF2429E356CB00FB1186 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = MixplorerUI/Assets; sourceTree = "<group>"; };
+		25B7AF2629E35CF000FB1186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +118,7 @@
 				25B7AF1A29E3544300FB1186 /* SideMenuView.swift */,
 				25B7AEAD29E322CB00FB1186 /* MixplorerUIApp.swift */,
 				25B7AEAF29E322CB00FB1186 /* ContentView.swift */,
+				25B7AF2629E35CF000FB1186 /* Assets.xcassets */,
 				25B7AF1429E328FE00FB1186 /* Main.storyboard */,
 				25B7AEF129E3267500FB1186 /* ARCameraTrackingState.swift */,
 				25B7AEEE29E3267500FB1186 /* MainViewController.swift */,
@@ -139,7 +140,6 @@
 				25B7AEE829E3267500FB1186 /* Utilities.swift */,
 				25B7AEE929E3267500FB1186 /* VirtualObject.swift */,
 				25B7AEED29E3267500FB1186 /* VirtualObjectSelectionViewController.swift */,
-				25B7AECC29E323CB00FB1186 /* Assets.xcassets */,
 				25B7AEB329E322CC00FB1186 /* Preview Content */,
 			);
 			path = MixplorerUI;
@@ -220,8 +220,8 @@
 				25B7AF2529E356CB00FB1186 /* Assets in Resources */,
 				25B7AEB529E322CC00FB1186 /* Preview Assets.xcassets in Resources */,
 				25B7AF1529E328FE00FB1186 /* Main.storyboard in Resources */,
-				25B7AECD29E323CB00FB1186 /* Assets.xcassets in Resources */,
 				25B7AF1729E32B6A00FB1186 /* Models.scnassets in Resources */,
+				25B7AF2729E35CF000FB1186 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
