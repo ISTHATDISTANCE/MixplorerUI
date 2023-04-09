@@ -18,6 +18,30 @@
 		25B7AEC929E3236700FB1186 /* GUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEC429E3236700FB1186 /* GUIView.swift */; };
 		25B7AECB29E323AD00FB1186 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AECA29E323AD00FB1186 /* Assets */; };
 		25B7AECD29E323CB00FB1186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AECC29E323CB00FB1186 /* Assets.xcassets */; };
+		25B7AEF329E3267500FB1186 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEE829E3267500FB1186 /* Utilities.swift */; };
+		25B7AEF429E3267500FB1186 /* VirtualObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEE929E3267500FB1186 /* VirtualObject.swift */; };
+		25B7AEF529E3267500FB1186 /* MainViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEEA29E3267500FB1186 /* MainViewWrapper.swift */; };
+		25B7AEF629E3267500FB1186 /* UI Elements in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AEEB29E3267500FB1186 /* UI Elements */; };
+		25B7AEF729E3267500FB1186 /* TextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEEC29E3267500FB1186 /* TextManager.swift */; };
+		25B7AEF829E3267500FB1186 /* VirtualObjectSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEED29E3267500FB1186 /* VirtualObjectSelectionViewController.swift */; };
+		25B7AEF929E3267500FB1186 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEEE29E3267500FB1186 /* MainViewController.swift */; };
+		25B7AEFA29E3267500FB1186 /* ScieneView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEEF29E3267500FB1186 /* ScieneView+Extension.swift */; };
+		25B7AEFB29E3267500FB1186 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEF029E3267500FB1186 /* SettingsViewController.swift */; };
+		25B7AEFC29E3267500FB1186 /* ARCameraTrackingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEF129E3267500FB1186 /* ARCameraTrackingState.swift */; };
+		25B7AEFD29E3267500FB1186 /* Virtual Objects in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AEF229E3267500FB1186 /* Virtual Objects */; };
+		25B7AEFF29E3280500FB1186 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AEFE29E3280500FB1186 /* Plane.swift */; };
+		25B7AF0429E3281500FB1186 /* PlaneDebugVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0029E3281500FB1186 /* PlaneDebugVisualization.swift */; };
+		25B7AF0529E3281500FB1186 /* HitTestVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0329E3281500FB1186 /* HitTestVisualization.swift */; };
+		25B7AF0629E3281500FB1186 /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0229E3281500FB1186 /* FocusSquare.swift */; };
+		25B7AF0729E3281500FB1186 /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0129E3281500FB1186 /* Gesture.swift */; };
+		25B7AF0E29E3282C00FB1186 /* Candle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0829E3282C00FB1186 /* Candle.swift */; };
+		25B7AF0F29E3282C00FB1186 /* Chair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0A29E3282C00FB1186 /* Chair.swift */; };
+		25B7AF1029E3282C00FB1186 /* Cup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0B29E3282C00FB1186 /* Cup.swift */; };
+		25B7AF1129E3282C00FB1186 /* Lamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0929E3282C00FB1186 /* Lamp.swift */; };
+		25B7AF1229E3282C00FB1186 /* VirtualObjectsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0D29E3282C00FB1186 /* VirtualObjectsManager.swift */; };
+		25B7AF1329E3282C00FB1186 /* Vase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7AF0C29E3282C00FB1186 /* Vase.swift */; };
+		25B7AF1529E328FE00FB1186 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AF1429E328FE00FB1186 /* Main.storyboard */; };
+		25B7AF1729E32B6A00FB1186 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B7AF1629E32B6A00FB1186 /* Models.scnassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +56,30 @@
 		25B7AEC429E3236700FB1186 /* GUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GUIView.swift; path = ../../Mixplorer/Mixplorer/GUIView.swift; sourceTree = "<group>"; };
 		25B7AECA29E323AD00FB1186 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../../Mixplorer/Mixplorer/Assets; sourceTree = "<group>"; };
 		25B7AECC29E323CB00FB1186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Mixplorer/Mixplorer/Assets.xcassets; sourceTree = "<group>"; };
+		25B7AEE829E3267500FB1186 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ARKitProject/Utilities.swift; sourceTree = "<group>"; };
+		25B7AEE929E3267500FB1186 /* VirtualObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VirtualObject.swift; path = ARKitProject/VirtualObject.swift; sourceTree = "<group>"; };
+		25B7AEEA29E3267500FB1186 /* MainViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewWrapper.swift; path = ARKitProject/MainViewWrapper.swift; sourceTree = "<group>"; };
+		25B7AEEB29E3267500FB1186 /* UI Elements */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "UI Elements"; path = "ARKitProject/UI Elements"; sourceTree = "<group>"; };
+		25B7AEEC29E3267500FB1186 /* TextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextManager.swift; path = ARKitProject/TextManager.swift; sourceTree = "<group>"; };
+		25B7AEED29E3267500FB1186 /* VirtualObjectSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VirtualObjectSelectionViewController.swift; path = ARKitProject/VirtualObjectSelectionViewController.swift; sourceTree = "<group>"; };
+		25B7AEEE29E3267500FB1186 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = ARKitProject/MainViewController.swift; sourceTree = "<group>"; };
+		25B7AEEF29E3267500FB1186 /* ScieneView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ScieneView+Extension.swift"; path = "ARKitProject/ScieneView+Extension.swift"; sourceTree = "<group>"; };
+		25B7AEF029E3267500FB1186 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ARKitProject/SettingsViewController.swift; sourceTree = "<group>"; };
+		25B7AEF129E3267500FB1186 /* ARCameraTrackingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARCameraTrackingState.swift; path = ARKitProject/ARCameraTrackingState.swift; sourceTree = "<group>"; };
+		25B7AEF229E3267500FB1186 /* Virtual Objects */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Virtual Objects"; path = "ARKitProject/Virtual Objects"; sourceTree = "<group>"; };
+		25B7AEFE29E3280500FB1186 /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		25B7AF0029E3281500FB1186 /* PlaneDebugVisualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneDebugVisualization.swift; sourceTree = "<group>"; };
+		25B7AF0129E3281500FB1186 /* Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
+		25B7AF0229E3281500FB1186 /* FocusSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
+		25B7AF0329E3281500FB1186 /* HitTestVisualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitTestVisualization.swift; sourceTree = "<group>"; };
+		25B7AF0829E3282C00FB1186 /* Candle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candle.swift; sourceTree = "<group>"; };
+		25B7AF0929E3282C00FB1186 /* Lamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lamp.swift; sourceTree = "<group>"; };
+		25B7AF0A29E3282C00FB1186 /* Chair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chair.swift; sourceTree = "<group>"; };
+		25B7AF0B29E3282C00FB1186 /* Cup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cup.swift; sourceTree = "<group>"; };
+		25B7AF0C29E3282C00FB1186 /* Vase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vase.swift; sourceTree = "<group>"; };
+		25B7AF0D29E3282C00FB1186 /* VirtualObjectsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectsManager.swift; sourceTree = "<group>"; };
+		25B7AF1429E328FE00FB1186 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		25B7AF1629E32B6A00FB1186 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; name = Models.scnassets; path = MixplorerUI/Models.scnassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +97,7 @@
 		25B7AEA129E322CB00FB1186 = {
 			isa = PBXGroup;
 			children = (
+				25B7AF1629E32B6A00FB1186 /* Models.scnassets */,
 				25B7AEAC29E322CB00FB1186 /* MixplorerUI */,
 				25B7AEAB29E322CB00FB1186 /* Products */,
 			);
@@ -67,6 +116,29 @@
 			children = (
 				25B7AEAD29E322CB00FB1186 /* MixplorerUIApp.swift */,
 				25B7AEAF29E322CB00FB1186 /* ContentView.swift */,
+				25B7AF1429E328FE00FB1186 /* Main.storyboard */,
+				25B7AEF129E3267500FB1186 /* ARCameraTrackingState.swift */,
+				25B7AEEE29E3267500FB1186 /* MainViewController.swift */,
+				25B7AEEA29E3267500FB1186 /* MainViewWrapper.swift */,
+				25B7AEEF29E3267500FB1186 /* ScieneView+Extension.swift */,
+				25B7AEF029E3267500FB1186 /* SettingsViewController.swift */,
+				25B7AEEC29E3267500FB1186 /* TextManager.swift */,
+				25B7AEFE29E3280500FB1186 /* Plane.swift */,
+				25B7AF0229E3281500FB1186 /* FocusSquare.swift */,
+				25B7AF0129E3281500FB1186 /* Gesture.swift */,
+				25B7AF0329E3281500FB1186 /* HitTestVisualization.swift */,
+				25B7AF0029E3281500FB1186 /* PlaneDebugVisualization.swift */,
+				25B7AF0829E3282C00FB1186 /* Candle.swift */,
+				25B7AF0A29E3282C00FB1186 /* Chair.swift */,
+				25B7AF0B29E3282C00FB1186 /* Cup.swift */,
+				25B7AF0929E3282C00FB1186 /* Lamp.swift */,
+				25B7AF0C29E3282C00FB1186 /* Vase.swift */,
+				25B7AF0D29E3282C00FB1186 /* VirtualObjectsManager.swift */,
+				25B7AEEB29E3267500FB1186 /* UI Elements */,
+				25B7AEE829E3267500FB1186 /* Utilities.swift */,
+				25B7AEF229E3267500FB1186 /* Virtual Objects */,
+				25B7AEE929E3267500FB1186 /* VirtualObject.swift */,
+				25B7AEED29E3267500FB1186 /* VirtualObjectSelectionViewController.swift */,
 				25B7AEC429E3236700FB1186 /* GUIView.swift */,
 				25B7AEC229E3236700FB1186 /* PlantsView.swift */,
 				25B7AEC029E3236700FB1186 /* PropertiesView.swift */,
@@ -152,8 +224,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				25B7AEB529E322CC00FB1186 /* Preview Assets.xcassets in Resources */,
+				25B7AEFD29E3267500FB1186 /* Virtual Objects in Resources */,
 				25B7AECB29E323AD00FB1186 /* Assets in Resources */,
+				25B7AF1529E328FE00FB1186 /* Main.storyboard in Resources */,
+				25B7AEF629E3267500FB1186 /* UI Elements in Resources */,
 				25B7AECD29E323CB00FB1186 /* Assets.xcassets in Resources */,
+				25B7AF1729E32B6A00FB1186 /* Models.scnassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,12 +240,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25B7AF1129E3282C00FB1186 /* Lamp.swift in Sources */,
+				25B7AF0E29E3282C00FB1186 /* Candle.swift in Sources */,
+				25B7AF0729E3281500FB1186 /* Gesture.swift in Sources */,
+				25B7AEF829E3267500FB1186 /* VirtualObjectSelectionViewController.swift in Sources */,
+				25B7AEF929E3267500FB1186 /* MainViewController.swift in Sources */,
+				25B7AF1029E3282C00FB1186 /* Cup.swift in Sources */,
 				25B7AEC929E3236700FB1186 /* GUIView.swift in Sources */,
+				25B7AF0F29E3282C00FB1186 /* Chair.swift in Sources */,
+				25B7AEFA29E3267500FB1186 /* ScieneView+Extension.swift in Sources */,
+				25B7AEFF29E3280500FB1186 /* Plane.swift in Sources */,
+				25B7AEF729E3267500FB1186 /* TextManager.swift in Sources */,
+				25B7AF0529E3281500FB1186 /* HitTestVisualization.swift in Sources */,
 				25B7AEC829E3236700FB1186 /* SideMenuView.swift in Sources */,
+				25B7AEFC29E3267500FB1186 /* ARCameraTrackingState.swift in Sources */,
+				25B7AF0629E3281500FB1186 /* FocusSquare.swift in Sources */,
 				25B7AEC529E3236700FB1186 /* PropertiesView.swift in Sources */,
+				25B7AEF529E3267500FB1186 /* MainViewWrapper.swift in Sources */,
+				25B7AEFB29E3267500FB1186 /* SettingsViewController.swift in Sources */,
 				25B7AEC729E3236700FB1186 /* PlantsView.swift in Sources */,
 				25B7AEB029E322CB00FB1186 /* ContentView.swift in Sources */,
+				25B7AF0429E3281500FB1186 /* PlaneDebugVisualization.swift in Sources */,
+				25B7AEF429E3267500FB1186 /* VirtualObject.swift in Sources */,
 				25B7AEC629E3236700FB1186 /* TTView.swift in Sources */,
+				25B7AEF329E3267500FB1186 /* Utilities.swift in Sources */,
+				25B7AF1329E3282C00FB1186 /* Vase.swift in Sources */,
+				25B7AF1229E3282C00FB1186 /* VirtualObjectsManager.swift in Sources */,
 				25B7AEAE29E322CB00FB1186 /* MixplorerUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +398,10 @@
 				DEVELOPMENT_TEAM = X2NV38LA7L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This camera is used for AR";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location is used for AR";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save photos of ARExperience";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save photos of AR experiences";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -331,6 +431,10 @@
 				DEVELOPMENT_TEAM = X2NV38LA7L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This camera is used for AR";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location is used for AR";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save photos of ARExperience";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save photos of AR experiences";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

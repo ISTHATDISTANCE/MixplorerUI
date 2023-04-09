@@ -54,6 +54,9 @@ struct ContentView: View {
                         NavigationLink(destination: TTView(), label: {
                             Text("Transportation Tools")
                         })
+                        NavigationLink(destination: MainViewWrapper(), label: {
+                            Text("Cam")
+                        })
                     }
                     .toolbar(.hidden)
                 }
@@ -61,7 +64,7 @@ struct ContentView: View {
                 HalfASheet(isPresented: $isWelcomeShow, title: "Welcome to Mixplorer") {
                     VStack {
                         Text("Mixplorer is a AR data collection app that enables AI-assisted object placement in the AR environment.")
-                    }
+                    }.padding()
                 }
                 .height(.proportional(0.4))
                 .contentInsets(EdgeInsets(top: 30, leading: 0, bottom: 0, trailing: 0))
