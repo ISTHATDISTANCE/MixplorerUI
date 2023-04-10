@@ -80,14 +80,20 @@ class MainViewController: UIViewController {
         
         let point = CGPoint(x: 0.5732487440109253 * 400, y: 0.6828111410140991 * 720)
         
-        vase.translateBasedOnScreenPos(point, instantly:false, infinitePlane:true)
-
+        var suggestionsDouble = [Double]()
+        
         DispatchQueue.main.async {
-//            let x = Float(suggestions[0])!
-//            let y = Float(suggestions[1])!
-            
+            for suggestion in suggestions {
+              if let doubleValue = Double(suggestion as! String) {
+                  suggestionsDouble.append(doubleValue)
+              }
+            }
+            let point = CGPoint(x: suggestionsDouble[0] * 400.0, y: suggestionsDouble[1] * 720.0)
             self.setNewVirtualObjectPosition(SCNVector3Zero)
+            vase.translateBasedOnScreenPos(point, instantly:false, infinitePlane:true)
+
         }
+
     }
     
     // MARK: - ARKit / ARSCNView
