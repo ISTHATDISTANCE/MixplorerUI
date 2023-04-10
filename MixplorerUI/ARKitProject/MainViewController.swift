@@ -5,6 +5,12 @@ import SceneKit
 import UIKit
 import Photos
 
+import Firebase
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+import FirebaseStorage
+
 class MainViewController: UIViewController {
 	var dragOnInfinitePlanesEnabled = false
     var currentGesture: Gesture?
@@ -32,6 +38,8 @@ class MainViewController: UIViewController {
 		setupFocusSquare()
 		updateSettings()
 		resetVirtualObject()
+        
+        listenFirebase()
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -45,7 +53,43 @@ class MainViewController: UIViewController {
 		super.viewWillDisappear(animated)
 		session.pause()
 	}
+    
+    func listenFirebase(){
+        print("observing suggestions")
+        let ref = Database.database().reference()
+        ref.child("Suggestions").observe(.value) { snapshot in
+            guard let suggestions = snapshot.value as? NSArray else {
+                print("something wrong", snapshot.value)
+                return
+                
+            }
+            self.addObjectBasedOnAI(suggestions: suggestions)
 
+              // Update your UI or perform other operations with the suggestions data
+              print("New suggestions: \(suggestions)")
+            
+        }
+    }
+    
+    func addObjectBasedOnAI(suggestions: NSArray){
+        let vase = Vase()
+        VirtualObjectsManager.shared.addVirtualObject(virtualObject:vase)
+        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject:vase)
+
+        vase.loadModel()
+        
+        let point = CGPoint(x: 0.5732487440109253 * 400, y: 0.6828111410140991 * 720)
+        
+        vase.translateBasedOnScreenPos(point, instantly:false, infinitePlane:true)
+
+        DispatchQueue.main.async {
+//            let x = Float(suggestions[0])!
+//            let y = Float(suggestions[1])!
+            
+            self.setNewVirtualObjectPosition(SCNVector3Zero)
+        }
+    }
+    
     // MARK: - ARKit / ARSCNView
     var use3DOFTracking = false {
 		didSet {
@@ -269,14 +313,50 @@ class MainViewController: UIViewController {
 			})
 		}
 	}
+    
+    
+    func sendImageToFireBase(){
+        guard sceneView.session.currentFrame != nil else { return }
+        // Convert the snapshot image to a Data object
+        guard let snapshotData = sceneView.snapshot().pngData() else {
+            // handle error
+            return
+        }
+        
+        let storageRef = Storage.storage().reference().child("images/snapshots.png")
 
+        print("uploading snapShot")
+        storageRef.putData(snapshotData, metadata: nil) { metadata, error in
+            if let error = error {
+                // handle error
+                print("Error uploading snapshot: \(error.localizedDescription)")
+                return
+            }
+            
+            // The snapshot has been successfully uploaded to Firebase Storage
+            print("Snapshot uploaded to Firebase Storage")
+        }
+        print("Complete snapShot")
+
+        print("updating Realtime DB")
+        let now = Date().timeIntervalSince1970
+        let beginningOfWorld = Date(timeIntervalSince1970: 0).timeIntervalSince1970
+        let worldLifetime = now - beginningOfWorld
+        let RTDB = Database.database().reference()
+        RTDB.child("Update").setValue(worldLifetime)
+        print("complete Realtime DB")
+
+    }
+    
+    
 	@IBOutlet weak var screenshotButton: UIButton!
 	@IBAction func takeSnapShot() {
 		guard sceneView.session.currentFrame != nil else { return }
 //		focusSquare?.isHidden = true
         
         let snapShot = sceneView.snapshot()
-            
+        sendImageToFireBase()
+        
         UIImageWriteToSavedPhotosAlbum(snapShot, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 //		let imagePlane = SCNPlane(width: sceneView.bounds.width / 6000, height: sceneView.bounds.height / 6000)
 //		imagePlane.firstMaterial?.diffuse.contents = sceneView.snapshot()
