@@ -20,7 +20,8 @@ class MainViewController: UIViewController {
 
 	let session = ARSession()
 	var sessionConfig: ARConfiguration = ARWorldTrackingConfiguration()
-
+    
+    
 	var trackingFallbackTimer: Timer?
 
 	// Use average of recent virtual object distances to avoid rapid changes in object scale.
@@ -39,7 +40,7 @@ class MainViewController: UIViewController {
 		updateSettings()
 		resetVirtualObject()
         
-        listenFirebase()
+        listenSuggestionsFromFirebase()
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -54,47 +55,47 @@ class MainViewController: UIViewController {
 		session.pause()
 	}
     
-    func listenFirebase(){
+    
+    
+    
+    func listenSuggestionsFromFirebase(){
         print("observing suggestions")
         let ref = Database.database().reference()
         ref.child("Suggestions").observe(.value) { snapshot in
             guard let suggestions = snapshot.value as? NSArray else {
                 print("something wrong", snapshot.value)
                 return
-                
             }
+            print("New suggestions: \(suggestions)")
             self.addObjectBasedOnAI(suggestions: suggestions)
-
-              // Update your UI or perform other operations with the suggestions data
-              print("New suggestions: \(suggestions)")
             
         }
     }
     
     func addObjectBasedOnAI(suggestions: NSArray){
-        let vase = Vase()
-        VirtualObjectsManager.shared.addVirtualObject(virtualObject:vase)
-        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject:vase)
-
-        vase.loadModel()
         
-        let point = CGPoint(x: 0.5732487440109253 * 400, y: 0.6828111410140991 * 720)
+        var doubleArray = [Double]()
+        for element in suggestions {
+            if let str = element as? String, let doubleValue = Double(str) {
+                doubleArray.append(doubleValue)
+            } else if let num = element as? NSNumber {
+                doubleArray.append(num.doubleValue)
+            }
+        }
         
-        var suggestionsDouble = [Double]()
+        print("doubleArray", doubleArray)
         
         DispatchQueue.main.async {
-            for suggestion in suggestions {
-              if let doubleValue = Double(suggestion as! String) {
-                  suggestionsDouble.append(doubleValue)
-              }
-            }
-            let point = CGPoint(x: suggestionsDouble[0] * 400.0, y: suggestionsDouble[1] * 720.0)
-            self.setNewVirtualObjectPosition(SCNVector3Zero)
-            vase.translateBasedOnScreenPos(point, instantly:false, infinitePlane:true)
-
+        let width = 400.0
+        let height = 720.0
+        
+        let point = CGPoint(x: (doubleArray[0] ) * width, y: (doubleArray[1] ) * height)
+            
+        VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
+            
         }
+      }
 
-    }
     
     // MARK: - ARKit / ARSCNView
     var use3DOFTracking = false {
@@ -351,9 +352,41 @@ class MainViewController: UIViewController {
         let RTDB = Database.database().reference()
         RTDB.child("Update").setValue(worldLifetime)
         print("complete Realtime DB")
+        
+        
+        ///upload raw image
+        
+        guard let currentFrame = self.session.currentFrame else { return }
+        let capturedImage = currentFrame.capturedImage
+
+        let ciImage = CIImage(cvPixelBuffer: capturedImage)
+        let context = CIContext(options: nil)
+        let cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
+        let uiImage = UIImage(cgImage: cgImage)
+
+        let rawRef = Storage.storage().reference().child("images/raw.png")
+
+        print("uploading raw")
+        if let imageData = uiImage.pngData(){
+            rawRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    // handle error
+                    print("Error uploading snapshot: \(error.localizedDescription)")
+                    return
+                }
+                
+                print("Raw uploaded to Firebase Storage")
+            }
+            print("Complete RawImage")
+        }
+        
 
     }
     
+    @IBOutlet weak var autoButton: UIButton!
+    @IBAction func autoGeneration(){
+        print("autoButton is clicked")
+    }
     
 	@IBOutlet weak var screenshotButton: UIButton!
 	@IBAction func takeSnapShot() {
@@ -453,10 +486,11 @@ extension MainViewController {
 			self.screenCenter = self.sceneView.bounds.mid
 		}
 	}
+    
 
 	func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
 //		textManager.showTrackingQualityInfo(for: camera.trackingState, autoHide: !self.showDebugVisuals)
-
+        
 		switch camera.trackingState {
 		case .notAvailable:
             break
@@ -573,6 +607,7 @@ extension MainViewController: VirtualObjectSelectionViewControllerDelegate {
 	func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, object: VirtualObject) {
 		loadVirtualObject(object: object)
 	}
+    
 
 	func loadVirtualObject(object: VirtualObject) {
 		// Show progress indicator
@@ -613,6 +648,18 @@ extension MainViewController: VirtualObjectSelectionViewControllerDelegate {
 
 // MARK: - ARSCNViewDelegate
 extension MainViewController: ARSCNViewDelegate {
+    func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
+            guard let frame = sceneView.session.currentFrame,
+                  let depthData = frame.capturedDepthData else { return }
+            
+            let depthWidth = CVPixelBufferGetWidth(depthData.depthDataMap)
+            let depthHeight = CVPixelBufferGetHeight(depthData.depthDataMap)
+            print("Depth resolution: \(depthWidth)x\(depthHeight)")
+            
+            // Use the depth data here
+            // ...
+        }
+    
 	func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 		refreshFeaturePoints()
 
