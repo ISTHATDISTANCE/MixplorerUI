@@ -40,7 +40,10 @@ class MainViewController: UIViewController {
         updateSettings()
         resetVirtualObject()
         
-        listenSuggestionsFromFirebase()
+//        screenshotButton.isHidden = true
+        
+//        listenSuggestionsFromFirebase()
+        listenSuggestionsFromFirebaseMultipleObjects()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,7 +58,48 @@ class MainViewController: UIViewController {
         session.pause()
     }
     
-    
+    func listenSuggestionsFromFirebaseMultipleObjects(){
+        let ref = Database.database().reference()
+        
+        let objects = ["vase", "lamp", "chair"]
+        for object in objects {
+            ref.child(object).observe(.value) { snapshot in
+                guard let suggestions = snapshot.value as? NSArray else {
+                    print("something wrong", snapshot.value)
+                    return
+                }
+                print("New suggestions: \(suggestions)")
+                
+                for virtualObject in VirtualObjectsManager.shared.getVirtualObjects(){
+                    if object == virtualObject.modelName{
+                        
+                        if virtualObject.isHidden {
+                            virtualObject.isHidden = false
+                        }
+                        
+                        var doubleArray = [Double]()
+                        for element in suggestions {
+                            if let str = element as? String, let doubleValue = Double(str) {
+                                doubleArray.append(doubleValue)
+                            } else if let num = element as? NSNumber {
+                                doubleArray.append(num.doubleValue)
+                            }
+                        }
+                        let width = self.sceneView.bounds.width
+                        let height = self.sceneView.bounds.height
+                        let point = CGPoint(x: (doubleArray[0] ) * width, y: (doubleArray[1] ) * height)
+                        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: virtualObject)
+                        
+                        virtualObject.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
+                    }
+                    
+                }
+                
+            }
+        }
+        
+
+    }
     
     
     func listenSuggestionsFromFirebase(){
@@ -72,7 +116,6 @@ class MainViewController: UIViewController {
     }
     
     func addObjectBasedOnAI(suggestions: NSArray){
-        
         var doubleArray = [Double]()
         for element in suggestions {
             if let str = element as? String, let doubleValue = Double(str) {
@@ -81,17 +124,12 @@ class MainViewController: UIViewController {
                 doubleArray.append(num.doubleValue)
             }
         }
-        
-        print("doubleArray", doubleArray)
-        
+                
         DispatchQueue.main.async {
             let width = 400.0
             let height = 720.0
-            
             let point = CGPoint(x: (doubleArray[0] ) * width, y: (doubleArray[1] ) * height)
-            
             VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
-            
         }
     }
     
@@ -435,21 +473,15 @@ class MainViewController: UIViewController {
         }
         
         
-        guard let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected(),
-              let cameraTransform = sceneView.session.currentFrame?.camera.transform else {
-            return
-        }
-        
+        guard let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected() else { return }
+        let BBox = getBoundingBoxRectForVirtualObject(on:sceneView, node: virtualObject)
+        print(BBox)
 //        let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()
-//        let virtualObjectPosition = virtualObject.worldPosition
-//        let virtualObjectInCamera = cameraTransform * simd_float4x4(virtualObject.transform)
-//
-//        let projectedPoint = sceneView.projectPoint(virtualObjectInCamera.translation)
-
-
-//        let projectedPoint = sceneView.projectPoint(virtualObjectPosition)
-//        let screenPoint = sceneView.convert(projectedPoint, to: )
-//        print(projectedPoint)
+//        guard let virtualObjectPosition = virtualObject?.worldPosition else { return }
+//        let screenCoordinate = sceneView.projectPoint(virtualObjectPosition)
+//        let scalingFactor = UIScreen.main.scale
+//        let pointCoordinate = CGPoint(x: CGFloat(screenCoordinate.x) * scalingFactor, y: CGFloat(screenCoordinate.y) * scalingFactor)
+//        print(pointCoordinate)
 
 //        let now = Date().timeIntervalSince1970
 //        let worldLifetime = now - Date(timeIntervalSince1970: 0).timeIntervalSince1970
@@ -462,31 +494,111 @@ class MainViewController: UIViewController {
         RTDB.child(identifier.uuidString).setValue(logs)
     }
     
+    
+    func getBoundingBoxRectForVirtualObject(on arView: ARSCNView, node virtualObjectNode: SCNNode) -> CGRect {
+        let boundingBox = virtualObjectNode.boundingBox
+        let corners = [
+            SCNVector3(boundingBox.min.x, boundingBox.min.y, boundingBox.min.z),
+            SCNVector3(boundingBox.min.x, boundingBox.min.y, boundingBox.max.z),
+            SCNVector3(boundingBox.min.x, boundingBox.max.y, boundingBox.min.z),
+            SCNVector3(boundingBox.min.x, boundingBox.max.y, boundingBox.max.z),
+            SCNVector3(boundingBox.max.x, boundingBox.min.y, boundingBox.min.z),
+            SCNVector3(boundingBox.max.x, boundingBox.min.y, boundingBox.max.z),
+            SCNVector3(boundingBox.max.x, boundingBox.max.y, boundingBox.min.z),
+            SCNVector3(boundingBox.max.x, boundingBox.max.y, boundingBox.max.z),
+        ]
+        let count = corners.count
+        let pointer = UnsafeMutablePointer<SCNVector3>.allocate(capacity: count)
+        pointer.initialize(from: corners, count: count)
+        let camera = arView.session.currentFrame?.camera
+        let viewportSize = arView.bounds.size
+//        let orientation: CGImagePropertyOrientation = {
+//            let deviceOrientation = UIDevice.current.orientation
+//            switch deviceOrientation {
+//            case .portrait: return .right
+//            case .portraitUpsideDown: return .left
+//            case .landscapeLeft: return .up
+//            case .landscapeRight: return .down
+//            default: return .right
+//            }
+//        }()
+        let projectedPoints = Array(UnsafeBufferPointer(start: pointer, count: count)).map { point -> CGPoint in
+            
+            let screenCoordinate = arView.projectPoint(point)
+            let scalingFactor = UIScreen.main.scale
+            let pointCoordinate = CGPoint(x: CGFloat(screenCoordinate.x) * scalingFactor, y: CGFloat(screenCoordinate.y) * scalingFactor)
+            return pointCoordinate
+//            let pointInImage = camera?.project(point, orientation: orientation, viewportSize: viewportSize)
+//            let pointOnScreen = arView.convertToViewport(pointInImage!, orientation: orientation)
+//            return CGPoint(x: CGFloat(pointOnScreen.x), y: CGFloat(pointOnScreen.y))
+        }
+        var boundingBox2D = CGRect.null
+        for i in 0..<count {
+            let point = projectedPoints[i]
+            boundingBox2D = boundingBox2D.union(CGRect(origin: point, size: .zero))
+        }
+        let scalingFactor = UIScreen.main.scale
+        let boundingBoxPoints = [
+            CGPoint(x: boundingBox2D.minX * scalingFactor, y: boundingBox2D.minY * scalingFactor),
+            CGPoint(x: boundingBox2D.maxX * scalingFactor, y: boundingBox2D.minY * scalingFactor),
+            CGPoint(x: boundingBox2D.maxX * scalingFactor, y: boundingBox2D.maxY * scalingFactor),
+            CGPoint(x: boundingBox2D.minX * scalingFactor, y: boundingBox2D.maxY * scalingFactor),
+        ]
+        let boundingBoxPath = UIBezierPath()
+            boundingBoxPath.move(to: boundingBoxPoints[0])
+            boundingBoxPath.addLine(to: boundingBoxPoints[1])
+            boundingBoxPath.addLine(to: boundingBoxPoints[2])
+            boundingBoxPath.addLine(to: boundingBoxPoints[3])
+            boundingBoxPath.close()
+            let boundingBoxRect = boundingBoxPath.cgPath.boundingBox
+            return boundingBoxRect
+    }
+
+
+
+    
     @IBOutlet weak var autoButton: UIButton!
     @IBAction func autoGeneration(){
         print("autoButton is clicked")
-        let vase = Vase()
-        let lamp = Lamp()
-        let chair = Chair()
+        let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()
+        let worldLifetime = Date().timeIntervalSince1970 - Date(timeIntervalSince1970: 0).timeIntervalSince1970
+        guard let modelName = virtualObject?.modelName else { return }
+        let RTDB = Database.database().reference()
+        RTDB.child(modelName).setValue(worldLifetime)
         
-//        vase.viewController = self
-//        VirtualObjectsManager.shared.addVirtualObject(virtualObject: vase)
-//        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: vase)
-//        vase.loadModel()
-//        self.setNewVirtualObjectPosition(SCNVector3Zero)
-//
-//        lamp.viewController = self
-//        VirtualObjectsManager.shared.addVirtualObject(virtualObject: lamp)
-//        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: lamp)
-//        lamp.loadModel()
-//        self.setNewVirtualObjectPosition(SCNVector3Zero)
-//
-//        chair.viewController = self
-//        VirtualObjectsManager.shared.addVirtualObject(virtualObject: chair)
-//        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: chair)
-//        chair.loadModel()
-//        self.setNewVirtualObjectPosition(SCNVector3Zero)
-//
+        guard let snapshotData = sceneView.snapshot().pngData() else { return}
+        
+        let storageRef = Storage.storage().reference().child("images/updateRaw.png")
+        
+        storageRef.putData(snapshotData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("Error uploading snapshot: \(error.localizedDescription)")
+                return
+            }
+            print("Snapshot uploaded to Firebase Storage")
+        }
+    }
+    @IBOutlet weak var shuffleButton: UIButton!
+    @IBAction func shuffle(){
+        for virtualObject in VirtualObjectsManager.shared.getVirtualObjects() {
+            let worldLifetime = Date().timeIntervalSince1970 - Date(timeIntervalSince1970: 0).timeIntervalSince1970
+            let modelName = virtualObject.modelName
+            let RTDB = Database.database().reference()
+            RTDB.child(modelName).setValue(worldLifetime)
+        }
+        
+        for virtualObject in VirtualObjectsManager.shared.getVirtualObjects() {
+            virtualObject.isHidden = true
+        }
+        guard let snapshotData = sceneView.snapshot().pngData() else { return}
+        let storageRef = Storage.storage().reference().child("images/updateRaw.png")
+        storageRef.putData(snapshotData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("Error uploading snapshot: \(error.localizedDescription)")
+                return
+            }
+            print("Snapshot uploaded to Firebase Storage")
+        }
     }
     
 	@IBOutlet weak var screenshotButton: UIButton!

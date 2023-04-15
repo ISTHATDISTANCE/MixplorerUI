@@ -12,25 +12,50 @@ blob = bucket.blob(imagePath)
 localPath = 'snapshots.png'
 blob.download_to_filename(localPath)
 
-def listenChanges(event):
+def listenChanges(event, modelName=""):
     # print(event)
     if event.data:
         print(event.data)
+        print(event.event_type)
+        print(event.path)
+
         bucket = storage.bucket('mixplorer-98aed.appspot.com')
-        imagePath = 'images/snapshots.png'
+        imagePath = 'images/updateRaw.png'
         blob = bucket.blob(imagePath)
-        localPath = 'snapshots.png'
+        localPath = 'updateRaw.png'
         blob.download_to_filename(localPath)
 
-        sendToFirebase()
+        if (event.path == "/lamp"):
+            sendToFirebase("lamp")
+        
 
-def sendToFirebase():
-    output = [1,1,1,1]
+        if(event.path == "/chair"):
+            sendToFirebase("chair")
+        
+
+        if(event.path == "/vase"):
+            sendToFirebase("vase")
+        
+
+        
+
+        # sendToFirebase()
+
+def sendToFirebase(modelName="", output=[0.5 , 0.5 , 0.5 , 0.5]):
     ref = db.reference()
-    ref.update({'Suggestions': output})
+    ref.update({modelName: output})
     # ref.updateChildValues(["users/123/name": "John", "users/123/age": 30])
     return
 
 
-ref = db.reference('/Update')
-ref.listen(listenChanges)
+# ref = db.reference('/Update')
+# ref.listen(listenChanges)
+
+test = db.reference()
+test.listen(listenChanges)
+
+# lamp = db.reference('/lamp')
+# lamp.listen(listenChanges())
+
+# chair = db.reference('/chair')
+# chair.listen(listenChanges())

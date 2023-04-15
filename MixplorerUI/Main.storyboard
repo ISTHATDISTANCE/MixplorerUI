@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E6c-py-dvH" customClass="ARSCNView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="-8" y="0.0" width="422" height="896"/>
                             </sceneKitView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHW-JQ-uOv" userLabel="Camera Button Hit Area">
-                                <rect key="frame" x="0.0" y="832" width="64" height="64"/>
+                                <rect key="frame" x="-8" y="832" width="64" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="0MV-Vc-tJN"/>
                                     <constraint firstAttribute="height" constant="64" id="NF3-2t-7ce"/>
@@ -82,7 +82,7 @@
                                 <state key="normal">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <imageReference key="image" image="camera.fill" catalog="system" symbolScale="large" renderingMode="hierarchical">
+                                    <imageReference key="image" image="square.and.arrow.up.fill" catalog="system" symbolScale="large" renderingMode="hierarchical">
                                         <hierarchicalColors>
                                             <color systemColor="systemBackgroundColor"/>
                                             <color systemColor="secondaryLabelColor"/>
@@ -129,12 +129,21 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwf-mo-chZ">
-                                <rect key="frame" x="43" y="774" width="328" height="35"/>
+                                <rect key="frame" x="239" y="774" width="155" height="35"/>
                                 <color key="tintColor" systemColor="systemIndigoColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="AUTO"/>
+                                <buttonConfiguration key="configuration" style="filled" title="AI Suggestion"/>
                                 <connections>
                                     <action selector="autoGeneration" destination="BV1-FR-VrT" eventType="touchUpInside" id="hBe-sE-rNF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGK-gI-5AW">
+                                <rect key="frame" x="32" y="774" width="79" height="35"/>
+                                <color key="tintColor" systemColor="systemMintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Shuffle"/>
+                                <connections>
+                                    <action selector="shuffle" destination="BV1-FR-VrT" eventType="touchUpInside" id="Ihf-vZ-v2i"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -147,18 +156,24 @@
                             <constraint firstItem="E6c-py-dvH" firstAttribute="top" secondItem="RLh-bf-1c3" secondAttribute="top" id="7gH-DS-Crg"/>
                             <constraint firstItem="E6c-py-dvH" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" id="8nh-ZQ-AuM"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="xcf-ic-uGo" secondAttribute="trailing" constant="43" id="CIm-DT-z1A"/>
+                            <constraint firstItem="AGK-gI-5AW" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" constant="32" id="CX9-K4-7r4"/>
+                            <constraint firstItem="AGK-gI-5AW" firstAttribute="baseline" secondItem="Qwf-mo-chZ" secondAttribute="baseline" id="EhM-xM-wjv"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="bottom" secondItem="qI1-of-tgS" secondAttribute="bottom" constant="7" id="EoQ-R6-wLs"/>
+                            <constraint firstItem="qI1-of-tgS" firstAttribute="top" secondItem="AGK-gI-5AW" secondAttribute="bottom" constant="8" id="IhP-B0-Nx6"/>
                             <constraint firstItem="mHW-JQ-uOv" firstAttribute="bottom" secondItem="E6c-py-dvH" secondAttribute="bottom" id="Nov-Ar-ZZv"/>
+                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="trailing" secondItem="RLh-bf-1c3" secondAttribute="trailingMargin" id="O25-rp-1KS"/>
                             <constraint firstItem="7IG-kS-Bgp" firstAttribute="bottom" secondItem="xcf-ic-uGo" secondAttribute="bottom" id="Rhi-Iz-JoP"/>
                             <constraint firstItem="qI1-of-tgS" firstAttribute="leading" secondItem="E6c-py-dvH" secondAttribute="leading" constant="40" id="TAE-Eo-uQj"/>
                             <constraint firstItem="SuF-Os-zmb" firstAttribute="top" secondItem="E6c-py-dvH" secondAttribute="top" id="UMK-or-VVf"/>
-                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="bottom" secondItem="qI1-of-tgS" secondAttribute="bottom" constant="-45" id="UNu-Rk-bxo"/>
+                            <constraint firstItem="AGK-gI-5AW" firstAttribute="leading" secondItem="qI1-of-tgS" secondAttribute="leading" id="V2T-LF-6GG"/>
                             <constraint firstItem="BgI-fb-Vqi" firstAttribute="top" secondItem="GBj-4O-Whc" secondAttribute="top" constant="7" id="V7S-nn-Lcz"/>
                             <constraint firstItem="gd9-TV-cKc" firstAttribute="baseline" secondItem="7IG-kS-Bgp" secondAttribute="baseline" id="YZo-U9-qoD"/>
                             <constraint firstItem="mHW-JQ-uOv" firstAttribute="leading" secondItem="E6c-py-dvH" secondAttribute="leading" id="YbV-6m-kVC"/>
-                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="leading" secondItem="qI1-of-tgS" secondAttribute="trailing" constant="-36" id="c10-Gn-YLM"/>
+                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" constant="239" id="Z6v-L6-dVB"/>
+                            <constraint firstAttribute="bottom" secondItem="Qwf-mo-chZ" secondAttribute="bottom" constant="87" id="ave-Hq-BdS"/>
                             <constraint firstItem="SPB-Sb-hjO" firstAttribute="bottom" secondItem="E6c-py-dvH" secondAttribute="bottom" id="fjf-Mj-ALG"/>
                             <constraint firstItem="gd9-TV-cKc" firstAttribute="leading" secondItem="qI1-of-tgS" secondAttribute="trailing" constant="27" id="gCu-f1-paS"/>
+                            <constraint firstItem="xcf-ic-uGo" firstAttribute="top" secondItem="Qwf-mo-chZ" secondAttribute="bottom" constant="8" id="gvK-wM-hN0"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" id="lHd-lf-g1u"/>
                             <constraint firstItem="xcf-ic-uGo" firstAttribute="leading" secondItem="7IG-kS-Bgp" secondAttribute="trailing" constant="27" id="rx1-n3-Dc8"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="bottom" secondItem="xcf-ic-uGo" secondAttribute="bottom" constant="3" id="sOL-M5-nW8"/>
@@ -172,6 +187,7 @@
                         <outlet property="restartExperienceButton" destination="BgI-fb-Vqi" id="Yfh-W4-qlO"/>
                         <outlet property="sceneView" destination="E6c-py-dvH" id="I70-TL-39m"/>
                         <outlet property="screenshotButton" destination="qI1-of-tgS" id="RLx-ag-NNP"/>
+                        <outlet property="shuffleButton" destination="AGK-gI-5AW" id="Kln-sV-oti"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -442,6 +458,7 @@
         <image name="camera.fill" catalog="system" width="128" height="93"/>
         <image name="restart" width="20" height="23"/>
         <image name="restartPressed" width="20" height="23"/>
+        <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
@@ -456,6 +473,9 @@
         </systemColor>
         <systemColor name="systemIndigoColor">
             <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
