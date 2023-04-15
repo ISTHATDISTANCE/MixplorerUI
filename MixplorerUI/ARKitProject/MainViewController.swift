@@ -12,48 +12,48 @@ import FirebaseAuth
 import FirebaseStorage
 
 class MainViewController: UIViewController {
-	var dragOnInfinitePlanesEnabled = false
+    var dragOnInfinitePlanesEnabled = false
     var currentGesture: Gesture?
-
-	var use3DOFTrackingFallback = false
-	var screenCenter: CGPoint?
-
-	let session = ARSession()
-	var sessionConfig: ARConfiguration = ARWorldTrackingConfiguration()
+    
+    var use3DOFTrackingFallback = false
+    var screenCenter: CGPoint?
+    
+    let session = ARSession()
+    var sessionConfig: ARConfiguration = ARWorldTrackingConfiguration()
     
     
-	var trackingFallbackTimer: Timer?
-
-	// Use average of recent virtual object distances to avoid rapid changes in object scale.
-	var recentVirtualObjectDistances = [CGFloat]()
-
-	let DEFAULT_DISTANCE_CAMERA_TO_OBJECTS = Float(10)
-
-	override func viewDidLoad() {
+    var trackingFallbackTimer: Timer?
+    
+    // Use average of recent virtual object distances to avoid rapid changes in object scale.
+    var recentVirtualObjectDistances = [CGFloat]()
+    
+    let DEFAULT_DISTANCE_CAMERA_TO_OBJECTS = Float(10)
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         Setting.registerDefaults()
         setupScene()
         setupDebug()
         setupUIControls()
-		setupFocusSquare()
-		updateSettings()
-		resetVirtualObject()
+        setupFocusSquare()
+        updateSettings()
+        resetVirtualObject()
         
         listenSuggestionsFromFirebase()
     }
-
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-
-		UIApplication.shared.isIdleTimerDisabled = true
-		restartPlaneDetection()
-	}
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		session.pause()
-	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIApplication.shared.isIdleTimerDisabled = true
+        restartPlaneDetection()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        session.pause()
+    }
     
     
     
@@ -68,7 +68,6 @@ class MainViewController: UIViewController {
             }
             print("New suggestions: \(suggestions)")
             self.addObjectBasedOnAI(suggestions: suggestions)
-            
         }
     }
     
@@ -86,252 +85,257 @@ class MainViewController: UIViewController {
         print("doubleArray", doubleArray)
         
         DispatchQueue.main.async {
-        let width = 400.0
-        let height = 720.0
-        
-        let point = CGPoint(x: (doubleArray[0] ) * width, y: (doubleArray[1] ) * height)
+            let width = 400.0
+            let height = 720.0
             
-        VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
+            let point = CGPoint(x: (doubleArray[0] ) * width, y: (doubleArray[1] ) * height)
+            
+            VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
             
         }
-      }
-
+    }
+    
     
     // MARK: - ARKit / ARSCNView
     var use3DOFTracking = false {
-		didSet {
-			if use3DOFTracking {
-				sessionConfig = ARWorldTrackingConfiguration()
-			}
-			sessionConfig.isLightEstimationEnabled = UserDefaults.standard.bool(for: .ambientLightEstimation)
-			session.run(sessionConfig)
-		}
-	}
-	@IBOutlet var sceneView: ARSCNView!
-
-    // MARK: - Ambient Light Estimation
-	func toggleAmbientLightEstimation(_ enabled: Bool) {
-        if enabled {
-			if !sessionConfig.isLightEstimationEnabled {
-				sessionConfig.isLightEstimationEnabled = true
-				session.run(sessionConfig)
-			}
-        } else {
-			if sessionConfig.isLightEstimationEnabled {
-				sessionConfig.isLightEstimationEnabled = false
-				session.run(sessionConfig)
-			}
+        didSet {
+            if use3DOFTracking {
+                sessionConfig = ARWorldTrackingConfiguration()
+            }
+            sessionConfig.isLightEstimationEnabled = UserDefaults.standard.bool(for: .ambientLightEstimation)
+            session.run(sessionConfig)
         }
     }
-
-    // MARK: - Virtual Object Loading
-	var isLoadingObject: Bool = false {
-		didSet {
-			DispatchQueue.main.async {
-//				self.settingsButton.isEnabled = !self.isLoadingObject
-				self.addObjectButton.isEnabled = !self.isLoadingObject
-				self.screenshotButton.isEnabled = !self.isLoadingObject
-				self.restartExperienceButton.isEnabled = !self.isLoadingObject
-			}
-		}
-	}
-
-	@IBOutlet weak var addObjectButton: UIButton!
-
-	@IBAction func chooseObject(_ button: UIButton) {
-		// Abort if we are about to load another object to avoid concurrent modifications of the scene.
-		if isLoadingObject { return }
-
-//		textManager.cancelScheduledMessage(forType: .contentPlacement)
-
-		let rowHeight = 45
-		let popoverSize = CGSize(width: 250, height: rowHeight * VirtualObjectSelectionViewController.COUNT_OBJECTS)
-
-		let objectViewController = VirtualObjectSelectionViewController(size: popoverSize)
-		objectViewController.delegate = self
-		objectViewController.modalPresentationStyle = .popover
-		objectViewController.popoverPresentationController?.delegate = self
-		self.present(objectViewController, animated: true, completion: nil)
-
-		objectViewController.popoverPresentationController?.sourceView = button
-		objectViewController.popoverPresentationController?.sourceRect = button.bounds
+    @IBOutlet var sceneView: ARSCNView!
+    
+    // MARK: - Ambient Light Estimation
+    func toggleAmbientLightEstimation(_ enabled: Bool) {
+        if enabled {
+            if !sessionConfig.isLightEstimationEnabled {
+                sessionConfig.isLightEstimationEnabled = true
+                session.run(sessionConfig)
+            }
+        } else {
+            if sessionConfig.isLightEstimationEnabled {
+                sessionConfig.isLightEstimationEnabled = false
+                session.run(sessionConfig)
+            }
+        }
     }
-
+    
+    // MARK: - Virtual Object Loading
+    var isLoadingObject: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                //				self.settingsButton.isEnabled = !self.isLoadingObject
+                self.addObjectButton.isEnabled = !self.isLoadingObject
+                self.screenshotButton.isEnabled = !self.isLoadingObject
+                self.restartExperienceButton.isEnabled = !self.isLoadingObject
+            }
+        }
+    }
+    
+    @IBOutlet weak var addObjectButton: UIButton!
+    
+    @IBAction func chooseObject(_ button: UIButton) {
+        // Abort if we are about to load another object to avoid concurrent modifications of the scene.
+        if isLoadingObject { return }
+        
+        //		textManager.cancelScheduledMessage(forType: .contentPlacement)
+        
+        let rowHeight = 45
+        let popoverSize = CGSize(width: 250, height: rowHeight * VirtualObjectSelectionViewController.COUNT_OBJECTS)
+        
+        //        print("UIbotton", button)
+        //        print("COUNT_OBJECTS", VirtualObjectSelectionViewController.COUNT_OBJECTS)
+        
+        let objectViewController = VirtualObjectSelectionViewController(size: popoverSize)
+        objectViewController.delegate = self
+        objectViewController.modalPresentationStyle = .popover
+        objectViewController.popoverPresentationController?.delegate = self
+        self.present(objectViewController, animated: true, completion: nil)
+        
+        objectViewController.popoverPresentationController?.sourceView = button
+        objectViewController.popoverPresentationController?.sourceRect = button.bounds
+    }
+    
     // MARK: - Planes
-
+    
     var planes = [ARPlaneAnchor: Plane]()
-
+    
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
-
-		let pos = SCNVector3.positionFromTransform(anchor.transform)
-//		textManager.showDebugMessage("NEW SURFACE DETECTED AT \(pos.friendlyString())")
-
-		let plane = Plane(anchor, showDebugVisuals)
-
-		planes[anchor] = plane
-		node.addChildNode(plane)
-
-//		textManager.cancelScheduledMessage(forType: .planeEstimation)
-//		textManager.showMessage("SURFACE DETECTED")
-//		if !VirtualObjectsManager.shared.isAVirtualObjectPlaced() {
-//			textManager.scheduleMessage("TAP + TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .contentPlacement)
-//		}
-	}
-
-	func restartPlaneDetection() {
-		// configure session
-		if let worldSessionConfig = sessionConfig as? ARWorldTrackingConfiguration {
-			worldSessionConfig.planeDetection = .horizontal
-			session.run(worldSessionConfig, options: [.resetTracking, .removeExistingAnchors])
-		}
-
-		// reset timer
-		if trackingFallbackTimer != nil {
-			trackingFallbackTimer!.invalidate()
-			trackingFallbackTimer = nil
-		}
-
-//		textManager.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .planeEstimation)
-	}
-
+        
+        let pos = SCNVector3.positionFromTransform(anchor.transform)
+        //		textManager.showDebugMessage("NEW SURFACE DETECTED AT \(pos.friendlyString())")
+        
+        let plane = Plane(anchor, showDebugVisuals)
+        
+        planes[anchor] = plane
+        node.addChildNode(plane)
+        
+        //		textManager.cancelScheduledMessage(forType: .planeEstimation)
+        //		textManager.showMessage("SURFACE DETECTED")
+        //		if !VirtualObjectsManager.shared.isAVirtualObjectPlaced() {
+        //			textManager.scheduleMessage("TAP + TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .contentPlacement)
+        //		}
+    }
+    
+    func restartPlaneDetection() {
+        // configure session
+        if let worldSessionConfig = sessionConfig as? ARWorldTrackingConfiguration {
+            worldSessionConfig.planeDetection = .horizontal
+            session.run(worldSessionConfig, options: [.resetTracking, .removeExistingAnchors])
+        }
+        
+        // reset timer
+        if trackingFallbackTimer != nil {
+            trackingFallbackTimer!.invalidate()
+            trackingFallbackTimer = nil
+        }
+        
+        //		textManager.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .planeEstimation)
+    }
+    
     // MARK: - Focus Square
     var focusSquare: FocusSquare?
-
+    
     func setupFocusSquare() {
-		focusSquare?.isHidden = true
-		focusSquare?.removeFromParentNode()
-		focusSquare = FocusSquare()
-		sceneView.scene.rootNode.addChildNode(focusSquare!)
-
-//		textManager.scheduleMessage("TRY MOVING LEFT OR RIGHT", inSeconds: 5.0, messageType: .focusSquare)
+        focusSquare?.isHidden = true
+        focusSquare?.removeFromParentNode()
+        focusSquare = FocusSquare()
+        sceneView.scene.rootNode.addChildNode(focusSquare!)
+        
+        //		textManager.scheduleMessage("TRY MOVING LEFT OR RIGHT", inSeconds: 5.0, messageType: .focusSquare)
     }
-
-	func updateFocusSquare() {
-		guard let screenCenter = screenCenter else { return }
-
-		let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()
-		if virtualObject != nil && sceneView.isNode(virtualObject!, insideFrustumOf: sceneView.pointOfView!) {
-			focusSquare?.hide()
-		} else {
-			focusSquare?.unhide()
-		}
-		let (worldPos, planeAnchor, _) = worldPositionFromScreenPosition(screenCenter, objectPos: focusSquare?.position)
-		if let worldPos = worldPos {
-			focusSquare?.update(for: worldPos, planeAnchor: planeAnchor, camera: self.session.currentFrame?.camera)
-//			textManager.cancelScheduledMessage(forType: .focusSquare)
-		}
-	}
-
-	// MARK: - Hit Test Visualization
-
-	var hitTestVisualization: HitTestVisualization?
-
-	var showHitTestAPIVisualization = UserDefaults.standard.bool(for: .showHitTestAPI) {
-		didSet {
-			UserDefaults.standard.set(showHitTestAPIVisualization, for: .showHitTestAPI)
-			if showHitTestAPIVisualization {
-				hitTestVisualization = HitTestVisualization(sceneView: sceneView)
-			} else {
-				hitTestVisualization = nil
-			}
-		}
-	}
-
+    
+    func updateFocusSquare() {
+        guard let screenCenter = screenCenter else { return }
+        
+        let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()
+        if virtualObject != nil && sceneView.isNode(virtualObject!, insideFrustumOf: sceneView.pointOfView!) {
+            focusSquare?.hide()
+        } else {
+            focusSquare?.unhide()
+        }
+        let (worldPos, planeAnchor, _) = worldPositionFromScreenPosition(screenCenter, objectPos: focusSquare?.position)
+        if let worldPos = worldPos {
+            focusSquare?.update(for: worldPos, planeAnchor: planeAnchor, camera: self.session.currentFrame?.camera)
+            //			textManager.cancelScheduledMessage(forType: .focusSquare)
+        }
+    }
+    
+    // MARK: - Hit Test Visualization
+    
+    var hitTestVisualization: HitTestVisualization?
+    
+    var showHitTestAPIVisualization = UserDefaults.standard.bool(for: .showHitTestAPI) {
+        didSet {
+            UserDefaults.standard.set(showHitTestAPIVisualization, for: .showHitTestAPI)
+            if showHitTestAPIVisualization {
+                hitTestVisualization = HitTestVisualization(sceneView: sceneView)
+            } else {
+                hitTestVisualization = nil
+            }
+        }
+    }
+    
     // MARK: - Debug Visualizations
-
-//	@IBOutlet var featurePointCountLabel: UILabel!
-
-	func refreshFeaturePoints() {
-		guard showDebugVisuals else {
-			return
-		}
-
-		guard let cloud = session.currentFrame?.rawFeaturePoints else {
-			return
-		}
-
-		DispatchQueue.main.async {
-//			self.featurePointCountLabel.text = "Features: \(cloud.__count)".uppercased()
-		}
-	}
-
+    
+    //	@IBOutlet var featurePointCountLabel: UILabel!
+    
+    func refreshFeaturePoints() {
+        guard showDebugVisuals else {
+            return
+        }
+        
+        guard let cloud = session.currentFrame?.rawFeaturePoints else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            //			self.featurePointCountLabel.text = "Features: \(cloud.__count)".uppercased()
+        }
+    }
+    
     var showDebugVisuals: Bool = UserDefaults.standard.bool(for: .debugMode) {
         didSet {
-//			featurePointCountLabel.isHidden = !showDebugVisuals
-//			debugMessageLabel.isHidden = !showDebugVisuals
-//			messagePanel.isHidden = !showDebugVisuals
-			planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
-			sceneView.debugOptions = []
-			if showDebugVisuals {
-				sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
-			}
+            //			featurePointCountLabel.isHidden = !showDebugVisuals
+            //			debugMessageLabel.isHidden = !showDebugVisuals
+            //			messagePanel.isHidden = !showDebugVisuals
+            planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
+            sceneView.debugOptions = []
+            if showDebugVisuals {
+                sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+            }
             UserDefaults.standard.set(showDebugVisuals, for: .debugMode)
         }
     }
-
+    
     func setupDebug() {
-//		messagePanel.layer.cornerRadius = 3.0
-//		messagePanel.clipsToBounds = true
+        //		messagePanel.layer.cornerRadius = 3.0
+        //		messagePanel.clipsToBounds = true
         return
     }
-
+    
     // MARK: - UI Elements and Actions
-
-//	@IBOutlet weak var messagePanel: UIView!
-//	@IBOutlet weak var messageLabel: UILabel!
-//	@IBOutlet weak var debugMessageLabel: UILabel!
-
-//	var textManager: TextManager!
-
+    
+    //	@IBOutlet weak var messagePanel: UIView!
+    //	@IBOutlet weak var messageLabel: UILabel!
+    //	@IBOutlet weak var debugMessageLabel: UILabel!
+    
+    //	var textManager: TextManager!
+    
     func setupUIControls() {
-//		textManager = TextManager(viewController: self)
-//		debugMessageLabel.isHidden = true
-//		featurePointCountLabel.text = ""
-//		debugMessageLabel.text = ""
-//		messageLabel.text = ""
+        //		textManager = TextManager(viewController: self)
+        //		debugMessageLabel.isHidden = true
+        //		featurePointCountLabel.text = ""
+        //		debugMessageLabel.text = ""
+        //		messageLabel.text = ""
     }
-
-	@IBOutlet weak var restartExperienceButton: UIButton!
-	var restartExperienceButtonIsEnabled = true
-
-	@IBAction func restartExperience(_ sender: Any) {
+    
+    @IBOutlet weak var restartExperienceButton: UIButton!
+    var restartExperienceButtonIsEnabled = true
+    
+    @IBAction func restartExperience(_ sender: Any) {
         print("test")
-		guard restartExperienceButtonIsEnabled, !isLoadingObject else {
-			return
-		}
+        guard restartExperienceButtonIsEnabled, !isLoadingObject else {
+            return
+        }
         print("restart")
-		DispatchQueue.main.async {
-			self.restartExperienceButtonIsEnabled = false
-
-//			self.textManager.cancelAllScheduledMessages()
-//			self.textManager.dismissPresentedAlert()
-//			self.textManager.showMessage("STARTING A NEW SESSION")
-			self.use3DOFTracking = false
-
-			self.setupFocusSquare()
-//			self.loadVirtualObject()
-			self.restartPlaneDetection()
-
-			self.restartExperienceButton.setImage(#imageLiteral(resourceName: "restart"), for: [])
-
-			// Disable Restart button for five seconds in order to give the session enough time to restart.
-			DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-				self.restartExperienceButtonIsEnabled = true
-			})
-		}
-	}
+        DispatchQueue.main.async {
+            self.restartExperienceButtonIsEnabled = false
+            
+            //			self.textManager.cancelAllScheduledMessages()
+            //			self.textManager.dismissPresentedAlert()
+            //			self.textManager.showMessage("STARTING A NEW SESSION")
+            self.use3DOFTracking = false
+            
+            self.setupFocusSquare()
+            //			self.loadVirtualObject()
+            self.restartPlaneDetection()
+            
+            self.restartExperienceButton.setImage(#imageLiteral(resourceName: "restart"), for: [])
+            
+            // Disable Restart button for five seconds in order to give the session enough time to restart.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+                self.restartExperienceButtonIsEnabled = true
+            })
+        }
+    }
     
     
     func sendImageToFireBase(){
         guard sceneView.session.currentFrame != nil else { return }
         // Convert the snapshot image to a Data object
+        sceneView.scene.background.contents = UIColor.clear
+
         guard let snapshotData = sceneView.snapshot().pngData() else {
             // handle error
             return
         }
         
         let storageRef = Storage.storage().reference().child("images/snapshots.png")
-
+        
         print("uploading snapShot")
         storageRef.putData(snapshotData, metadata: nil) { metadata, error in
             if let error = error {
@@ -344,7 +348,7 @@ class MainViewController: UIViewController {
             print("Snapshot uploaded to Firebase Storage")
         }
         print("Complete snapShot")
-
+        
         print("updating Realtime DB")
         let now = Date().timeIntervalSince1970
         let beginningOfWorld = Date(timeIntervalSince1970: 0).timeIntervalSince1970
@@ -358,14 +362,14 @@ class MainViewController: UIViewController {
         
         guard let currentFrame = self.session.currentFrame else { return }
         let capturedImage = currentFrame.capturedImage
-
+        
         let ciImage = CIImage(cvPixelBuffer: capturedImage)
         let context = CIContext(options: nil)
         let cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
         let uiImage = UIImage(cgImage: cgImage)
-
+        
         let rawRef = Storage.storage().reference().child("images/raw.png")
-
+        
         print("uploading raw")
         if let imageData = uiImage.pngData(){
             rawRef.putData(imageData, metadata: nil) { metadata, error in
@@ -380,12 +384,109 @@ class MainViewController: UIViewController {
             print("Complete RawImage")
         }
         
+        
+    }
+    
+    @IBOutlet weak var posButton: UIButton!
+    @IBAction func positiveUpload(){
+        print("positiveUpload")
+        determineNegPos(NegPosSet:"pos")
+    }
+    
+    @IBOutlet weak var negButton: UIButton!
+    @IBAction func negativeUpload(){
+        determineNegPos(NegPosSet:"neg")
+    }
+    
+    func determineNegPos(NegPosSet:String){
+        guard sceneView.session.currentFrame != nil else { return }
+        guard let snapshotData = sceneView.snapshot().pngData() else { return }
+        let identifier = UUID()
+        let arFileName = "ar/" + identifier.uuidString + ".png"
+        let storageRef = Storage.storage().reference().child(arFileName)
+        storageRef.putData(snapshotData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("Error uploading snapshot: \(error.localizedDescription)")
+                return
+            }
+            print("Snapshot uploaded to Firebase Storage")
+        }
 
+        ///upload raw image
+        guard let currentFrame = self.session.currentFrame else { return }
+        let capturedImage = currentFrame.capturedImage
+
+        let ciImage = CIImage(cvPixelBuffer: capturedImage)
+        let context = CIContext(options: nil)
+        let cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
+        let uiImage = UIImage(cgImage: cgImage)
+
+        let rawFileName = "raw/" + identifier.uuidString + ".png"
+        let rawRef = Storage.storage().reference().child(rawFileName)
+        if let imageData = uiImage.pngData(){
+            rawRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("Error uploading snapshot: \(error.localizedDescription)")
+                    return
+                }
+                print("Raw uploaded to Firebase Storage")
+            }
+            print("Complete RawImage")
+        }
+        
+        
+        guard let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected(),
+              let cameraTransform = sceneView.session.currentFrame?.camera.transform else {
+            return
+        }
+        
+//        let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()
+//        let virtualObjectPosition = virtualObject.worldPosition
+//        let virtualObjectInCamera = cameraTransform * simd_float4x4(virtualObject.transform)
+//
+//        let projectedPoint = sceneView.projectPoint(virtualObjectInCamera.translation)
+
+
+//        let projectedPoint = sceneView.projectPoint(virtualObjectPosition)
+//        let screenPoint = sceneView.convert(projectedPoint, to: )
+        print(projectedPoint)
+
+//        let now = Date().timeIntervalSince1970
+//        let worldLifetime = now - Date(timeIntervalSince1970: 0).timeIntervalSince1970
+        let RTDB = Database.database().reference(withPath: "log")
+        
+        var logs = ["positive" : 1, "negative" : 0]
+        if (NegPosSet == "neg"){
+            logs = ["positive" : 0, "negative" : 1]
+        }
+        RTDB.child(identifier.uuidString).setValue(logs)
     }
     
     @IBOutlet weak var autoButton: UIButton!
     @IBAction func autoGeneration(){
         print("autoButton is clicked")
+        let vase = Vase()
+        let lamp = Lamp()
+        let chair = Chair()
+        
+//        vase.viewController = self
+//        VirtualObjectsManager.shared.addVirtualObject(virtualObject: vase)
+//        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: vase)
+//        vase.loadModel()
+//        self.setNewVirtualObjectPosition(SCNVector3Zero)
+//
+//        lamp.viewController = self
+//        VirtualObjectsManager.shared.addVirtualObject(virtualObject: lamp)
+//        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: lamp)
+//        lamp.loadModel()
+//        self.setNewVirtualObjectPosition(SCNVector3Zero)
+//
+//        chair.viewController = self
+//        VirtualObjectsManager.shared.addVirtualObject(virtualObject: chair)
+//        VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: chair)
+//        chair.loadModel()
+//        self.setNewVirtualObjectPosition(SCNVector3Zero)
+//
     }
     
 	@IBOutlet weak var screenshotButton: UIButton!
@@ -476,6 +577,17 @@ class MainViewController: UIViewController {
 //			textManager.showAlert(title: title, message: message, actions: [])
 		}
 	}
+}
+
+extension ARSCNView {
+    /// Performs screen snapshot manually, seems faster than built in snapshot() function, but still somewhat noticeable
+    var snapshot: UIImage? {
+       let renderer = UIGraphicsImageRenderer(size: self.bounds.size)
+        let image = renderer.image(actions: { context in
+            self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        })
+        return image
+    }
 }
 
 // MARK: - ARKit / ARSCNView
@@ -605,7 +717,8 @@ extension MainViewController: UIPopoverPresentationControllerDelegate {
 // MARK: - VirtualObjectSelectionViewControllerDelegate
 extension MainViewController: VirtualObjectSelectionViewControllerDelegate {
 	func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, object: VirtualObject) {
-		loadVirtualObject(object: object)
+        print("loadVirtualObject", object)
+        loadVirtualObject(object: object)
 	}
     
 
@@ -617,6 +730,8 @@ extension MainViewController: VirtualObjectSelectionViewControllerDelegate {
 		addObjectButton.setImage(#imageLiteral(resourceName: "buttonring"), for: [])
 		sceneView.addSubview(spinner)
 		spinner.startAnimating()
+        
+        print("loadVirtualObject")
 
 		DispatchQueue.global().async {
 			self.isLoadingObject = true
@@ -625,7 +740,6 @@ extension MainViewController: VirtualObjectSelectionViewControllerDelegate {
 			VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: object)
 
 			object.loadModel()
-
 			DispatchQueue.main.async {
 				if let lastFocusSquarePos = self.focusSquare?.lastPosition {
 					self.setNewVirtualObjectPosition(lastFocusSquarePos)
@@ -726,6 +840,8 @@ extension MainViewController {
 
 		let distance = String(format: "%.2f", distanceToUser)
 		let scale = String(format: "%.2f", object.scale.x)
+        print("distance", distance)
+        print("scale", scale)
 //		textManager.showDebugMessage("Distance: \(distance) m\nRotation: \(angleDegrees)°\nScale: \(scale)x")
 	}
 

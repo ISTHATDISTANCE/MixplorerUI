@@ -60,8 +60,8 @@
                                     <action selector="restartExperience:" destination="BV1-FR-VrT" eventType="touchUpInside" id="0lM-js-lrR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcf-ic-uGo" userLabel="Add Object Button">
-                                <rect key="frame" x="330" y="818" width="41" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcf-ic-uGo" userLabel="Add Object Button">
+                                <rect key="frame" x="337" y="817" width="41" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="41" id="NZv-Ts-4dl"/>
                                     <constraint firstAttribute="height" constant="41" id="Z1M-DD-gjO"/>
@@ -73,8 +73,8 @@
                                     <action selector="chooseObject:" destination="BV1-FR-VrT" eventType="touchUpInside" id="6wa-rW-fJZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qI1-of-tgS">
-                                <rect key="frame" x="40" y="818" width="47" height="37"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qI1-of-tgS">
+                                <rect key="frame" x="32" y="817" width="47" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="47" id="e3K-8f-4kx"/>
                                     <constraint firstAttribute="height" constant="37" id="i0u-nn-GIY"/>
@@ -112,8 +112,24 @@
                                     <action selector="takeSnapShot" destination="BV1-FR-VrT" eventType="touchUpInside" id="gnz-Fm-TFA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwf-mo-chZ">
-                                <rect key="frame" x="177" y="820" width="70" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gd9-TV-cKc">
+                                <rect key="frame" x="106" y="823" width="92" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Negative"/>
+                                <connections>
+                                    <action selector="negativeUpload" destination="BV1-FR-VrT" eventType="touchUpInside" id="NVo-3q-HEI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7IG-kS-Bgp" userLabel="Pos Button">
+                                <rect key="frame" x="226" y="823" width="84" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Positive"/>
+                                <connections>
+                                    <action selector="positiveUpload" destination="BV1-FR-VrT" eventType="touchUpInside" id="pbQ-cn-iCi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwf-mo-chZ">
+                                <rect key="frame" x="43" y="774" width="328" height="35"/>
                                 <color key="tintColor" systemColor="systemIndigoColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="AUTO"/>
@@ -133,20 +149,26 @@
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="xcf-ic-uGo" secondAttribute="trailing" constant="43" id="CIm-DT-z1A"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="bottom" secondItem="qI1-of-tgS" secondAttribute="bottom" constant="7" id="EoQ-R6-wLs"/>
                             <constraint firstItem="mHW-JQ-uOv" firstAttribute="bottom" secondItem="E6c-py-dvH" secondAttribute="bottom" id="Nov-Ar-ZZv"/>
+                            <constraint firstItem="7IG-kS-Bgp" firstAttribute="bottom" secondItem="xcf-ic-uGo" secondAttribute="bottom" id="Rhi-Iz-JoP"/>
                             <constraint firstItem="qI1-of-tgS" firstAttribute="leading" secondItem="E6c-py-dvH" secondAttribute="leading" constant="40" id="TAE-Eo-uQj"/>
                             <constraint firstItem="SuF-Os-zmb" firstAttribute="top" secondItem="E6c-py-dvH" secondAttribute="top" id="UMK-or-VVf"/>
-                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="bottom" secondItem="qI1-of-tgS" secondAttribute="bottom" id="UNu-Rk-bxo"/>
+                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="bottom" secondItem="qI1-of-tgS" secondAttribute="bottom" constant="-45" id="UNu-Rk-bxo"/>
                             <constraint firstItem="BgI-fb-Vqi" firstAttribute="top" secondItem="GBj-4O-Whc" secondAttribute="top" constant="7" id="V7S-nn-Lcz"/>
+                            <constraint firstItem="gd9-TV-cKc" firstAttribute="baseline" secondItem="7IG-kS-Bgp" secondAttribute="baseline" id="YZo-U9-qoD"/>
                             <constraint firstItem="mHW-JQ-uOv" firstAttribute="leading" secondItem="E6c-py-dvH" secondAttribute="leading" id="YbV-6m-kVC"/>
-                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="leading" secondItem="qI1-of-tgS" secondAttribute="trailing" constant="90" id="c10-Gn-YLM"/>
+                            <constraint firstItem="Qwf-mo-chZ" firstAttribute="leading" secondItem="qI1-of-tgS" secondAttribute="trailing" constant="-36" id="c10-Gn-YLM"/>
                             <constraint firstItem="SPB-Sb-hjO" firstAttribute="bottom" secondItem="E6c-py-dvH" secondAttribute="bottom" id="fjf-Mj-ALG"/>
+                            <constraint firstItem="gd9-TV-cKc" firstAttribute="leading" secondItem="qI1-of-tgS" secondAttribute="trailing" constant="27" id="gCu-f1-paS"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" id="lHd-lf-g1u"/>
+                            <constraint firstItem="xcf-ic-uGo" firstAttribute="leading" secondItem="7IG-kS-Bgp" secondAttribute="trailing" constant="27" id="rx1-n3-Dc8"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="bottom" secondItem="xcf-ic-uGo" secondAttribute="bottom" constant="3" id="sOL-M5-nW8"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="addObjectButton" destination="xcf-ic-uGo" id="uFa-W2-4Iu"/>
                         <outlet property="autoButton" destination="Qwf-mo-chZ" id="aFg-9x-ZJd"/>
+                        <outlet property="negButton" destination="gd9-TV-cKc" id="d1r-HV-bCl"/>
+                        <outlet property="posButton" destination="7IG-kS-Bgp" id="aSB-1w-gFh"/>
                         <outlet property="restartExperienceButton" destination="BgI-fb-Vqi" id="Yfh-W4-qlO"/>
                         <outlet property="sceneView" destination="E6c-py-dvH" id="I70-TL-39m"/>
                         <outlet property="screenshotButton" destination="qI1-of-tgS" id="RLx-ag-NNP"/>
