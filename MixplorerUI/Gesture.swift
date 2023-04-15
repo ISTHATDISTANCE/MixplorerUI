@@ -12,7 +12,7 @@ class Gesture {
 
 	var currentTouches = Set<UITouch>()
 	let sceneView: ARSCNView
-	let virtualObject: VirtualObject
+    var virtualObject: VirtualObject
 
 	var refreshTimer: Timer?
 
@@ -123,6 +123,7 @@ class SingleFingerGesture: Gesture {
 				break
 			}
 		}
+        self.virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()!
 	}
 
 	func updateGesture() {
@@ -179,7 +180,7 @@ class SingleFingerGesture: Gesture {
 				objectHit = true
 			}
 		}
-
+        
 		// In general, if this tap has hit the object itself then the object should
 		// not be repositioned. However, if the object covers a significant
 		// percentage of the screen then we should interpret the tap as repositioning
@@ -265,7 +266,7 @@ class TwoFingerGesture: Gesture {
 	var initialDistanceBetweenFingers: CGFloat = 0
 	var baseDistanceBetweenFingers: CGFloat = 0
 	var objectBaseScale: CGFloat = 1.0
-
+    
 	override init(_ touches: Set<UITouch>, _ sceneView: ARSCNView, _ virtualObject: VirtualObject) {
 		super.init(touches, sceneView, virtualObject)
 

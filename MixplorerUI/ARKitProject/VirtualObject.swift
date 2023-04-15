@@ -71,6 +71,7 @@ extension VirtualObject {
 
 	static func isNodePartOfVirtualObject(_ node: SCNNode) -> Bool {
 		if node.name == VirtualObject.ROOT_NAME {
+            VirtualObjectsManager.shared.setVirtualObjectSelected(node)
 			return true
 		}
 

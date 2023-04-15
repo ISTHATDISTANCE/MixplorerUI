@@ -952,8 +952,8 @@ extension MainViewController {
 
 		let distance = String(format: "%.2f", distanceToUser)
 		let scale = String(format: "%.2f", object.scale.x)
-        print("distance", distance)
-        print("scale", scale)
+//        print("distance", distance)
+//        print("scale", scale)
 //		textManager.showDebugMessage("Distance: \(distance) m\nRotation: \(angleDegrees)°\nScale: \(scale)x")
 	}
 

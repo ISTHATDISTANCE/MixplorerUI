@@ -8,6 +8,7 @@
 
 import Foundation
 import os.log
+import ARKit
 
 class VirtualObjectsManager {
 
@@ -70,4 +71,14 @@ class VirtualObjectsManager {
 	func getVirtualObjectSelected() -> VirtualObject? {
 		return self.virtualObjectSelected
 	}
+    
+    func setVirtualObjectSelected(_ node: SCNNode) {
+        for object in virtualObjects {
+            if object == node {
+                print(object, node)
+                self.virtualObjectSelected = object
+                return
+            }
+        }
+    }
 }
