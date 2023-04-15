@@ -449,7 +449,7 @@ class MainViewController: UIViewController {
 
 //        let projectedPoint = sceneView.projectPoint(virtualObjectPosition)
 //        let screenPoint = sceneView.convert(projectedPoint, to: )
-        print(projectedPoint)
+//        print(projectedPoint)
 
 //        let now = Date().timeIntervalSince1970
 //        let worldLifetime = now - Date(timeIntervalSince1970: 0).timeIntervalSince1970
