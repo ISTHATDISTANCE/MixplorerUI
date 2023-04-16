@@ -362,6 +362,7 @@ class MainViewController: UIViewController {
         positionLabel.text = ""
         rotationLabel.text = ""
         depthLabel.text = ""
+        
     }
     
     @IBOutlet weak var restartExperienceButton: UIButton!
@@ -648,7 +649,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var debugButton: UISwitch!
     @IBAction func debugDidChange(_ sender: UISwitch) {
 //		guard sceneView.session.currentFrame != nil else { return }
-        if sender.isOn {
+        if !sender.isOn {
             textManager.hideDebugMessage()
             sceneView.scene.background.contents = self.originalSource
         }
