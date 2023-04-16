@@ -116,6 +116,10 @@ class MainViewController: UIViewController {
             }
             print("New suggestions: \(suggestions)")
             self.adjustObjectBasedOnAI(suggestions: suggestions)
+            self.textManager.showMessage("AI suggestion received")
+            if self.debugButton.isOn {
+                self.textManager.showDebugMessage()
+            }
         }
     }
     
@@ -599,7 +603,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var autoButton: UIButton!
     @IBAction func autoGeneration(){
         print("autoButton is clicked")
-        textManager.showMessage("AI suggestions requested")
+        textManager.showMessage("AI suggestion requested")
         let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()
         let worldLifetime = Date().timeIntervalSince1970 - Date(timeIntervalSince1970: 0).timeIntervalSince1970
         guard let modelName = virtualObject?.modelName else { return }
@@ -621,7 +625,7 @@ class MainViewController: UIViewController {
     }
     @IBOutlet weak var shuffleButton: UIButton!
     @IBAction func shuffle(){
-        textManager.showMessage("Random shuffled")
+        textManager.showMessage("AI suggestions requested")
         for virtualObject in VirtualObjectsManager.shared.getVirtualObjects() {
             let worldLifetime = Date().timeIntervalSince1970 - Date(timeIntervalSince1970: 0).timeIntervalSince1970
             let modelName = virtualObject.modelName
