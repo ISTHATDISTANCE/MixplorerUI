@@ -30,7 +30,7 @@ struct ContentView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Asset Store")
+                        Text("Mixplorer")
                             .font(.largeTitle)
                         Spacer()
                         Image(systemName: "bag")
@@ -40,22 +40,22 @@ struct ContentView: View {
                             .padding(12)
                     }
                     Spacer()
-                    Text("Select virtual objects you would like to bring to Mix Reality environment, and add them to your bag.")
+                    Text("AI-Empowered Efficient AR Furniture Data Collection Software")
                     List {
-                        NavigationLink(destination: GUIView(), label: {
-                            Text("GUIs")
-                        })
-                        NavigationLink(destination: PropertiesView(), label: {
-                            Text("Properties")
-                        })
-                        NavigationLink(destination: PlantsView(), label: {
-                            Text("Plants")
-                        })
-                        NavigationLink(destination: TTView(), label: {
-                            Text("Transportation Tools")
-                        })
+//                        NavigationLink(destination: GUIView(), label: {
+//                            Text("GUIs")
+//                        })
+//                        NavigationLink(destination: PropertiesView(), label: {
+//                            Text("Properties")
+//                        })
+//                        NavigationLink(destination: PlantsView(), label: {
+//                            Text("Plants")
+//                        })
+//                        NavigationLink(destination: TTView(), label: {
+//                            Text("Transportation Tools")
+//                        })
                         NavigationLink(destination: MainViewWrapper().ignoresSafeArea(), label: {
-                            Text("Cam")
+                            Text("Object Placement")
                         })
                     }
                     .toolbar(.hidden)

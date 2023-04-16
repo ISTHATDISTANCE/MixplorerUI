@@ -404,7 +404,7 @@ class MainViewController: UIViewController {
         // Convert the snapshot image to a Data object
         sceneView.scene.background.contents = UIColor.clear
 
-        guard let snapshotData = sceneView.snapshot().pngData() else {
+        guard let snapshotData = sceneView.snapshot!.pngData() else {
             // handle error
             return
         }
@@ -477,7 +477,7 @@ class MainViewController: UIViewController {
     
     func determineNegPos(NegPosSet:String){
         guard sceneView.session.currentFrame != nil else { return }
-        guard let snapshotData = sceneView.snapshot().pngData() else { return }
+        guard let snapshotData = sceneView.snapshot!.pngData() else { return }
         let identifier = UUID()
         let arFileName = "ar/" + identifier.uuidString + ".png"
         let storageRef = Storage.storage().reference().child(arFileName)
@@ -606,7 +606,7 @@ class MainViewController: UIViewController {
         let RTDB = Database.database().reference()
         RTDB.child(modelName).setValue(worldLifetime)
         
-        guard let snapshotData = sceneView.snapshot().pngData() else { return}
+        guard let snapshotData = sceneView.snapshot!.pngData() else { return}
         
         let storageRef = Storage.storage().reference().child("images/updateRaw.png")
         
@@ -617,7 +617,7 @@ class MainViewController: UIViewController {
             }
             print("Snapshot uploaded to Firebase Storage")
         }
-        adjustObjectBasedOnAI(suggestions: NSArray(array:[Float(0),Float(0)])) // TODO: delete me!!!!
+//        adjustObjectBasedOnAI(suggestions: NSArray(array:[Float(0),Float(0)])) // TODO: delete me!!!!
     }
     @IBOutlet weak var shuffleButton: UIButton!
     @IBAction func shuffle(){
@@ -632,7 +632,7 @@ class MainViewController: UIViewController {
         for virtualObject in VirtualObjectsManager.shared.getVirtualObjects() {
             virtualObject.isHidden = true
         }
-        guard let snapshotData = sceneView.snapshot().pngData() else { return}
+        guard let snapshotData = sceneView.snapshot!.pngData() else { return}
         let storageRef = Storage.storage().reference().child("images/updateRaw.png")
         storageRef.putData(snapshotData, metadata: nil) { metadata, error in
             if let error = error {
@@ -1242,3 +1242,4 @@ extension MainViewController {
 		}
 	}
 }
+
