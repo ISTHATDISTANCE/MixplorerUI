@@ -353,7 +353,7 @@ class MainViewController: UIViewController {
             self.restartPlaneDetection()
             
             self.restartExperienceButton.setImage(#imageLiteral(resourceName: "restart"), for: [])
-            
+            self.resetVirtualObject()
             // Disable Restart button for five seconds in order to give the session enough time to restart.
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
                 self.restartExperienceButtonIsEnabled = true
