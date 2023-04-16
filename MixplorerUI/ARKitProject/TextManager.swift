@@ -33,25 +33,45 @@ class TextManager {
 		}
 	}
 
-	func showDebugMessage(_ message: String) {
-		guard viewController.showDebugVisuals else {
-			return
-		}
+	func showDebugMessage() {
+//		guard viewController.showDebugVisuals else {
+//			return
+//		}
 
-		debugMessageHideTimer?.invalidate()
-
+//		debugMessageHideTimer?.invalidate()
+//        Object Category
+//        Size
+//        Position
+//        Rotation
+//        Depth
+//        3D recording
+//        Different types of constraints
+        let object = VirtualObjectsManager.shared.getVirtualObjectSelected()
+        if object == nil {
+            self.hideDebugMessage()
+            return
+        }
+        
+        let boundingBox = object!.boundingBox
+        let depth = boundingBox.max.z - boundingBox.min.z
+        let size = (boundingBox.max.x - boundingBox.min.x)*(boundingBox.max.y - boundingBox.min.y)*(boundingBox.max.z - boundingBox.min.z)
+        
+        viewController.typeLabel.text = "Category: \(object!.modelName)"
+        viewController.sizeLabel.text = "Size: \(size)"
+        viewController.positionLabel.text = String(format: "Position: (%.2f, %.2f, %.2f)", object!.position.x, object!.position.y, object!.position.z)
+        viewController.rotationLabel.text = String(format: "Rotation: (%.2f°, %.2f°, %.2f°)", object!.eulerAngles.x, object!.eulerAngles.y, object!.eulerAngles.z)
+        viewController.depthLabel.text = "Depth: \(depth)"
 //		viewController.debugMessageLabel.text = message
-
-		showHideDebugMessage(hide: false, animated: true)
-
-		let charCount = message.count
-		let displayDuration: TimeInterval = min(10, Double(charCount) / 15.0 + 1.0)
-		debugMessageHideTimer = Timer.scheduledTimer(withTimeInterval: displayDuration,
-		                                             repeats: false,
-		                                             block: { [weak self] ( _ ) in
-														self?.showHideDebugMessage(hide: true, animated: true)
-		})
+//        print(object!.eulerAngles)
 	}
+    
+    func hideDebugMessage() {
+        viewController.typeLabel.text = ""
+        viewController.sizeLabel.text = ""
+        viewController.positionLabel.text = ""
+        viewController.rotationLabel.text = ""
+        viewController.depthLabel.text = ""
+    }
 
 	var schedulingMessagesBlocked = false
 

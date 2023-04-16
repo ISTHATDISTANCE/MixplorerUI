@@ -21,6 +21,7 @@ class MainViewController: UIViewController {
     let session = ARSession()
     var sessionConfig: ARConfiguration = ARWorldTrackingConfiguration()
     
+    var originalSource: Any? = nil
     
     var trackingFallbackTimer: Timer?
     
@@ -98,6 +99,9 @@ class MainViewController: UIViewController {
             }
         }
         self.textManager.showMessage("AI suggestions received")
+        if self.debugButton.isOn {
+            textManager.showDebugMessage()
+        }
 
     }
     
@@ -131,6 +135,9 @@ class MainViewController: UIViewController {
             let height = 720.0
             let point = CGPoint(x: (doubleArray[0] ) * width, y: (doubleArray[1] ) * height)
             VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
+            if self.debugButton.isOn {
+                self.textManager.showDebugMessage()
+            }
         }
     }
     
@@ -168,7 +175,7 @@ class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 //				self.settingsButton.isEnabled = !self.isLoadingObject
                 self.addObjectButton.isEnabled = !self.isLoadingObject
-                self.screenshotButton.isEnabled = !self.isLoadingObject
+                self.debugButton.isEnabled = !self.isLoadingObject
                 self.restartExperienceButton.isEnabled = !self.isLoadingObject
             }
         }
@@ -181,7 +188,10 @@ class MainViewController: UIViewController {
         let height = self.sceneView.bounds.height
         let point = CGPoint(x: Float64.random(in: 0...width), y: Float64.random(in: 0.2*height...height))
         DispatchQueue.main.async {
-              VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
+            VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
+            if self.debugButton.isOn {
+                self.textManager.showDebugMessage()
+            }
         }
     }
     @IBOutlet weak var addObjectButton: UIButton!
@@ -214,7 +224,7 @@ class MainViewController: UIViewController {
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         
         let pos = SCNVector3.positionFromTransform(anchor.transform)
-        textManager.showDebugMessage("New Surface Detected at \(pos.friendlyString())")
+//        textManager.showDebugMessage("New Surface Detected at \(pos.friendlyString())")
         
         let plane = Plane(anchor, showDebugVisuals)
         
@@ -330,7 +340,16 @@ class MainViewController: UIViewController {
     //	@IBOutlet weak var messagePanel: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     //	@IBOutlet weak var debugMessageLabel: UILabel!
-    
+    @IBOutlet weak var typeLabel: UILabel!
+    //    Object Category
+    @IBOutlet weak var sizeLabel: UILabel!
+    //        Size
+    @IBOutlet weak var positionLabel: UILabel!
+    //        Position
+    @IBOutlet weak var rotationLabel: UILabel!
+    //        Rotation
+    @IBOutlet weak var depthLabel: UILabel!
+    //        Depth
     var textManager: TextManager!
     
     func setupUIControls() {
@@ -338,18 +357,24 @@ class MainViewController: UIViewController {
 //        debugMessageLabel.isHidden = true
 //        featurePointCountLabel.text = ""
 //        debugMessageLabel.text = ""
-        messageLabel.text = ""
+        typeLabel.text = ""
+        sizeLabel.text = ""
+        positionLabel.text = ""
+        rotationLabel.text = ""
+        depthLabel.text = ""
     }
     
     @IBOutlet weak var restartExperienceButton: UIButton!
     var restartExperienceButtonIsEnabled = true
     
     @IBAction func restartExperience(_ sender: Any) {
-        print("test")
+        resetScene()
+    }
+    
+    func resetScene() {
         guard restartExperienceButtonIsEnabled, !isLoadingObject else {
             return
         }
-        print("restart")
         textManager.showMessage("Virtual objects Cleared")
         DispatchQueue.main.async {
             self.restartExperienceButtonIsEnabled = false
@@ -360,7 +385,7 @@ class MainViewController: UIViewController {
             self.use3DOFTracking = false
             
             self.setupFocusSquare()
-            //			self.loadVirtualObject()
+            //            self.loadVirtualObject()
             self.restartPlaneDetection()
             
             self.restartExperienceButton.setImage(#imageLiteral(resourceName: "restart"), for: [])
@@ -615,18 +640,30 @@ class MainViewController: UIViewController {
             }
             print("Snapshot uploaded to Firebase Storage")
         }
+        if debugButton.isOn {
+            textManager.showDebugMessage()
+        }
     }
     
-	@IBOutlet weak var screenshotButton: UIButton!
-	@IBAction func takeSnapShot() {
-        textManager.showMessage("Snapshot taken & sent to Firebase")
-		guard sceneView.session.currentFrame != nil else { return }
+    @IBOutlet weak var debugButton: UISwitch!
+    @IBAction func debugDidChange(_ sender: UISwitch) {
+//		guard sceneView.session.currentFrame != nil else { return }
+        if sender.isOn {
+            textManager.hideDebugMessage()
+            sceneView.scene.background.contents = self.originalSource
+        }
+        else {
+            self.originalSource = sceneView.scene.background.contents
+//            print(sceneView.scene.background.contents)
+            sceneView.scene.background.contents = UIColor.clear
+            textManager.showDebugMessage()
+        }
 //		focusSquare?.isHidden = true
-        
-        let snapShot = sceneView.snapshot()
-        sendImageToFireBase()
-        
-        UIImageWriteToSavedPhotosAlbum(snapShot, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+
+//        let snapShot = sceneView.snapshot()
+//        sendImageToFireBase()
+//
+//        UIImageWriteToSavedPhotosAlbum(snapShot, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 //		let imagePlane = SCNPlane(width: sceneView.bounds.width / 6000, height: sceneView.bounds.height / 6000)
 //		imagePlane.firstMaterial?.diffuse.contents = sceneView.snapshot()
 //		imagePlane.firstMaterial?.lightingModel = .constant
@@ -813,6 +850,9 @@ extension MainViewController {
 		}
 		currentGesture = currentGesture?.updateGestureFromTouches(touches, .touchMoved)
 		displayVirtualObjectTransform()
+        if self.debugButton.isOn {
+            textManager.showDebugMessage()
+        }
 	}
 
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -1008,7 +1048,7 @@ extension MainViewController {
 		let scale = String(format: "%.2f", object.scale.x)
 //        print("distance", distance)
 //        print("scale", scale)
-		textManager.showDebugMessage("Distance: \(distance) m\nRotation: \(angleDegrees)°\nScale: \(scale)x")
+//		textManager.showDebugMessage("Distance: \(distance) m\nRotation: \(angleDegrees)°\nScale: \(scale)x")
 	}
 
 	func moveVirtualObjectToPosition(_ pos: SCNVector3?, _ instantly: Bool, _ filterPosition: Bool) {
@@ -1191,7 +1231,7 @@ extension MainViewController {
 		// Drop the object onto the plane if it is near it.
 		let verticalAllowance: Float = 0.03
 		if objectPos.y > -verticalAllowance && objectPos.y < verticalAllowance {
-			textManager.showDebugMessage("OBJECT MOVED\nSurface detected nearby")
+//			textManager.showDebugMessage("OBJECT MOVED\nSurface detected nearby")
 
 			SCNTransaction.begin()
 			SCNTransaction.animationDuration = 0.5
