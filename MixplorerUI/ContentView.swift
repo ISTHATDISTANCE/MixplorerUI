@@ -54,7 +54,7 @@ struct ContentView: View {
                         NavigationLink(destination: TTView(), label: {
                             Text("Transportation Tools")
                         })
-                        NavigationLink(destination: MainViewWrapper(), label: {
+                        NavigationLink(destination: MainViewWrapper().ignoresSafeArea(), label: {
                             Text("Cam")
                         })
                     }

@@ -97,7 +97,7 @@ class MainViewController: UIViewController {
                 
             }
         }
-        
+        self.textManager.showMessage("AI suggestions received")
 
     }
     
@@ -111,11 +111,12 @@ class MainViewController: UIViewController {
                 return
             }
             print("New suggestions: \(suggestions)")
-            self.addObjectBasedOnAI(suggestions: suggestions)
+            self.adjustObjectBasedOnAI(suggestions: suggestions)
         }
     }
     
-    func addObjectBasedOnAI(suggestions: NSArray){
+    func addObjectBasedOnAI(suggestions: NSArray) {} // DEPRECATED: now AI suggestion only applies to currently selected object
+    func adjustObjectBasedOnAI(suggestions: NSArray){
         var doubleArray = [Double]()
         for element in suggestions {
             if let str = element as? String, let doubleValue = Double(str) {
@@ -173,6 +174,16 @@ class MainViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var randomizeButton: UIButton!
+    
+    @IBAction func randomizeObjects(_ button: UIButton) {
+        let width = self.sceneView.bounds.width
+        let height = self.sceneView.bounds.height
+        let point = CGPoint(x: Float64.random(in: 0...width), y: Float64.random(in: 0.2*height...height))
+        DispatchQueue.main.async {
+              VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly:true, infinitePlane:false)
+        }
+    }
     @IBOutlet weak var addObjectButton: UIButton!
     
     @IBAction func chooseObject(_ button: UIButton) {
@@ -562,7 +573,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var autoButton: UIButton!
     @IBAction func autoGeneration(){
         print("autoButton is clicked")
-        textManager.showMessage("AI suggestions given")
+        textManager.showMessage("AI suggestions requested")
         let virtualObject = VirtualObjectsManager.shared.getVirtualObjectSelected()
         let worldLifetime = Date().timeIntervalSince1970 - Date(timeIntervalSince1970: 0).timeIntervalSince1970
         guard let modelName = virtualObject?.modelName else { return }
@@ -580,6 +591,7 @@ class MainViewController: UIViewController {
             }
             print("Snapshot uploaded to Firebase Storage")
         }
+        adjustObjectBasedOnAI(suggestions: NSArray(array:[Float(0),Float(0)])) // TODO: delete me!!!!
     }
     @IBOutlet weak var shuffleButton: UIButton!
     @IBAction func shuffle(){
@@ -875,6 +887,43 @@ extension MainViewController: VirtualObjectSelectionViewControllerDelegate {
 			}
 		}
 	}
+    
+    func loadVirtualObjectWithPoint(object: VirtualObject, point: CGPoint) {
+        let spinner = UIActivityIndicatorView()
+        spinner.center = addObjectButton.center
+        spinner.bounds.size = CGSize(width: addObjectButton.bounds.width - 5, height: addObjectButton.bounds.height - 5)
+        addObjectButton.setImage(#imageLiteral(resourceName: "buttonring"), for: [])
+        sceneView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        print("loadVirtualObject")
+
+        DispatchQueue.global().async {
+            self.isLoadingObject = true
+            object.viewController = self
+            VirtualObjectsManager.shared.addVirtualObject(virtualObject: object)
+            VirtualObjectsManager.shared.setVirtualObjectSelected(virtualObject: object)
+
+            object.loadModel()
+            VirtualObjectsManager.shared.getVirtualObjectSelected()?.translateBasedOnScreenPos(point, instantly: true, infinitePlane: false)
+            DispatchQueue.main.async {
+//                if let lastFocusSquarePos = self.focusSquare?.lastPosition {
+//                    self.setNewVirtualObjectPosition(lastFocusSquarePos)
+//                } else {
+//                    self.setNewVirtualObjectPosition(SCNVector3Zero)
+//                }
+
+                spinner.removeFromSuperview()
+
+                // Update the icon of the add object button
+                let buttonImage = UIImage.composeButtonImage(from: object.thumbImage)
+                let pressedButtonImage = UIImage.composeButtonImage(from: object.thumbImage, alpha: 0.3)
+                self.addObjectButton.setImage(buttonImage, for: [])
+                self.addObjectButton.setImage(pressedButtonImage, for: [.highlighted])
+                self.isLoadingObject = false
+            }
+        }
+    }
 }
 
 // MARK: - ARSCNViewDelegate
