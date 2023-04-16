@@ -16,8 +16,9 @@ class TextManager {
 
 	func showMessage(_ text: String, autoHide: Bool = true) {
 		messageHideTimer?.invalidate()
-
-//		viewController.messageLabel.text = text
+        viewController.messageLabel.numberOfLines = 3
+		viewController.messageLabel.text = text
+        viewController.messageLabel.lineBreakMode = .byWordWrapping
 
 		showHideMessage(hide: false, animated: true)
 
@@ -208,7 +209,7 @@ class TextManager {
 
 	private func showHideMessage(hide: Bool, animated: Bool) {
 		if !animated {
-//			viewController.messageLabel.isHidden = hide
+			viewController.messageLabel.isHidden = hide
 			return
 		}
 
@@ -216,8 +217,8 @@ class TextManager {
 		               delay: 0,
 		               options: [.allowUserInteraction, .beginFromCurrentState],
 		               animations: {
-//						self.viewController.messageLabel.isHidden = hide
-//						self.updateMessagePanelVisibility()
+						self.viewController.messageLabel.isHidden = hide
+						self.updateMessagePanelVisibility()
 		}, completion: nil)
 	}
 

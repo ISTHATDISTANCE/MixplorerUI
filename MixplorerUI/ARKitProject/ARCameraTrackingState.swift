@@ -5,19 +5,19 @@ extension ARCamera.TrackingState {
 	var presentationString: String {
 		switch self {
         case .notAvailable:
-            return "TRACKING UNAVAILABLE"
+            return "Tracking Unavailable"
         case .normal:
-            return "TRACKING NORMAL"
+            return "Tracking Normal"
         case .limited(let reason):
             switch reason {
             case .excessiveMotion:
-                return "TRACKING LIMITED\nToo much camera movement"
+                return "Tracking Limited\nToo much camera movement"
             case .insufficientFeatures:
-                return "TRACKING LIMITED\nNot enough surface detail"
+                return "Tracking Limited\nNot enough surface detail"
             case .initializing:
-                return "INITIALIZING"
+                return "Initializing AR Scene"
             case .relocalizing:
-                return "INITIALIZING"
+                return "Initializing AR Scene"
             @unknown default:
                 return ""
             }

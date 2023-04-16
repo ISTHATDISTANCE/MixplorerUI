@@ -75,7 +75,6 @@ class VirtualObjectsManager {
     func setVirtualObjectSelected(_ node: SCNNode) {
         for object in virtualObjects {
             if object == node {
-                print(object, node)
                 self.virtualObjectSelected = object
                 return
             }
